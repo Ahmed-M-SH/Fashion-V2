@@ -24,7 +24,8 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     public HomeProductAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate= LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_pop_list,parent, false);
         context = parent.getContext();
-        return new Viewholder(inflate);    }
+        return new Viewholder(inflate);
+    }
 
     public HomeProductAdapter(ProductResult items) {
         this.items = items;

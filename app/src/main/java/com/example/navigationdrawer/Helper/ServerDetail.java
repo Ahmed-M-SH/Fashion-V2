@@ -1,5 +1,6 @@
 package com.example.navigationdrawer.Helper;
 
+import com.example.navigationdrawer.Domain.Category;
 import com.example.navigationdrawer.Domain.ProductDetail;
 import com.example.navigationdrawer.Domain.ProductResult;
 import com.example.navigationdrawer.Domain.UserAuthentication;
@@ -20,6 +21,8 @@ public  interface ServerDetail {
 
     @GET("/api/products/")
     Call <ProductResult> getProduct();
+    @GET("/api/categorys/")
+    Call <List<Category>> getCategory();
 
     @GET("/api/products/{productId}/")
     Call<ProductDetail> getProductDetail(@Path("productId") int productId);

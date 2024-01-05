@@ -1,10 +1,9 @@
 
 package com.example.navigationdrawer.Domain;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class SubCategory {
 
@@ -17,9 +16,12 @@ public class SubCategory {
     @SerializedName("level")
     @Expose
     private Integer level;
-    @SerializedName("sub_categories")
+    @SerializedName("category_image")
     @Expose
-    private List<SubCategory__1> subCategories;
+    private String categoryImage;
+    @SerializedName("sub_category")
+    @Expose
+    private List<Category> subCategory;
 
     public Integer getId() {
         return id;
@@ -45,12 +47,20 @@ public class SubCategory {
         this.level = level;
     }
 
-    public List<SubCategory__1> getSubCategories() {
-        return subCategories;
+    public String getCategoryImage() {
+        return categoryImage;
     }
 
-    public void setSubCategories(List<SubCategory__1> subCategories) {
-        this.subCategories = subCategories;
+    public void setCategoryImage(String categoryImage) {
+        this.categoryImage = categoryImage;
+    }
+
+    public List<Category> getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(List<Category> subCategory) {
+        this.subCategory = subCategory;
     }
 
 }

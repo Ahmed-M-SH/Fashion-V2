@@ -1,39 +1,30 @@
 
 package com.example.navigationdrawer.Domain;
 
+import com.example.navigationdrawer.Helper.ServerDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
+
 public class Category {
 
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("sub_category")
-    @Expose
-    private List<SubCategory> subCategory;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("category_image")
     @Expose
     private String categoryImage;
-    @SerializedName("lft")
+    @SerializedName("sub_category")
     @Expose
-    private Integer lft;
-    @SerializedName("rght")
-    @Expose
-    private Integer rght;
-    @SerializedName("tree_id")
-    @Expose
-    private Integer treeId;
+    private List<Category> subCategory;
     @SerializedName("level")
     @Expose
     private Integer level;
-    @SerializedName("parent")
-    @Expose
-    private Object parent;
 
     public Integer getId() {
         return id;
@@ -41,14 +32,6 @@ public class Category {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<SubCategory> getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(List<SubCategory> subCategory) {
-        this.subCategory = subCategory;
     }
 
     public String getName() {
@@ -60,6 +43,9 @@ public class Category {
     }
 
     public String getCategoryImage() {
+        if (categoryImage != null && !categoryImage.startsWith("http")) {
+            return ServerDetail.endpoint + categoryImage;
+        }
         return categoryImage;
     }
 
@@ -67,28 +53,12 @@ public class Category {
         this.categoryImage = categoryImage;
     }
 
-    public Integer getLft() {
-        return lft;
+    public List<Category> getSubCategory() {
+        return subCategory;
     }
 
-    public void setLft(Integer lft) {
-        this.lft = lft;
-    }
-
-    public Integer getRght() {
-        return rght;
-    }
-
-    public void setRght(Integer rght) {
-        this.rght = rght;
-    }
-
-    public Integer getTreeId() {
-        return treeId;
-    }
-
-    public void setTreeId(Integer treeId) {
-        this.treeId = treeId;
+    public void setSubCategory(List<Category> subCategory) {
+        this.subCategory = subCategory;
     }
 
     public Integer getLevel() {
@@ -99,12 +69,14 @@ public class Category {
         this.level = level;
     }
 
-    public Object getParent() {
-        return parent;
+    public List<Category> getAllSubCategories() {
+        List<Category> allSubCategories = new ArrayList<>();
+        if (subCategory != null) {
+            for (Category subCategory : subCategory) {
+                allSubCategories.add(subCategory);
+                allSubCategories.addAll(subCategory.getAllSubCategories());
+            }
+        }
+        return allSubCategories;
     }
-
-    public void setParent(Object parent) {
-        this.parent = parent;
-    }
-
 }
