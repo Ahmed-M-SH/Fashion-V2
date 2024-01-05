@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.navigationdrawer.Adapter.HomeCategoryAdapter;
 import com.example.navigationdrawer.Adapter.HomeProductAdapter;
 import com.example.navigationdrawer.Domain.Category;
-import com.example.navigationdrawer.Domain.CategoryDeserializer;
 import com.example.navigationdrawer.Domain.ProductResult;
 import com.example.navigationdrawer.Helper.RetrofitClient;
 import com.example.navigationdrawer.Helper.ServerDetail;
@@ -58,18 +57,19 @@ public class HomeFragment extends Fragment {
     }
 
     private void sendCategoryRequest() {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Category.class, new CategoryDeserializer())
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ServerDetail.endpoint)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        ServerDetail serverDetail =  retrofit.create(ServerDetail.class);
-        Call<List<Category>> call = serverDetail.getCategory();
-//                .getServerDetail()
-//                .getCategory();
+//        Gson gson = new GsonBuilder()
+//                .registerTypeAdapter(Category.class, new CategoryDeserializer())
+//                .create();
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(ServerDetail.endpoint)
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .build();
+//        ServerDetail serverDetail =  RetrofitClient.getInstance().create(ServerDetail.class);
+        Call<List<Category>> call = RetrofitClient.getInstance()
+                .getServerDetail()
+                .getCategory();
+//
 
         call.enqueue(new Callback<List<Category>>() {
             @Override

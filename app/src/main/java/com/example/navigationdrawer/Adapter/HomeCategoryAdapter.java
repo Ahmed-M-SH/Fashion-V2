@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
 import com.example.navigationdrawer.Domain.Category;
-import com.example.navigationdrawer.Domain.ProductResult;
-import com.example.navigationdrawer.Domain.SubCategory;
 import com.example.navigationdrawer.R;
 
 import java.util.ArrayList;
@@ -25,12 +23,12 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     public HomeCategoryAdapter(List<Category> items) {
         this.items = items;
 //        this.categoryList = new ArrayList<Category>();
-        this.categoryList = getAllSubCategories(items);
+
     }
 
     List<Category> items;
     Context context;
-    List<Category> categoryList;
+//    List<Category> categoryList;
     @NonNull
     @Override
     public HomeCategoryAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,10 +40,10 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull HomeCategoryAdapter.Viewholder holder, int position) {
-        holder.titleTxt.setText(categoryList.get(position).getName());
+        holder.titleTxt.setText(items.get(position).getName());
 
-        if (!categoryList.get(position).getCategoryImage().isEmpty())
-            Glide.with(holder.itemView.getContext()).load(categoryList.get(position).getCategoryImage()).into(holder.image);
+        if (!items.get(position).getCategoryImage().isEmpty())
+            Glide.with(holder.itemView.getContext()).load(items.get(position).getCategoryImage()).into(holder.image);
         else {
             Glide.with(holder.itemView.getContext())
                     .load(R.drawable.pic1)
@@ -55,7 +53,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
     @Override
     public int getItemCount() {
-        return categoryList.size();
+        return items.size();
     }
 
     public class Viewholder extends RecyclerView.ViewHolder {
@@ -68,14 +66,4 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
         }
     }
 
-    private List<Category> getAllSubCategories(List<Category> categories) {
-        List<Category> allSubCategories = new ArrayList<>();
-        for (Category category : categories) {
-            allSubCategories.add(category);
-            if (category.getSubCategory() != null && !category.getSubCategory().isEmpty()) {
-                allSubCategories.addAll(getAllSubCategories(category.getSubCategory()));
-            }
-        }
-        return allSubCategories;
-    }
 }

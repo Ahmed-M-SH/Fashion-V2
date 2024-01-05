@@ -34,8 +34,9 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     @Override
     public void onBindViewHolder(@NonNull HomeProductAdapter.Viewholder holder, int position) {
         holder.titleTxt.setText(""+items.getResults().get(position).getName());
-        holder.feeTxt.setText("$"+items.getResults().get(position).getPrice());
+        holder.feeTxt.setText("$"+items.getResults().get(position).getNew_price());
         holder.ScoreTxt.setText(""+items.getResults().get(position).getRate());
+        holder.reviewTxt.setText(""+items.getResults().get(position).getReview());
 //        if (items.getResults().get(position).getImage().get(0) != null)
 
         if (items.getResults().get(position).getImage().size() > 0)

@@ -5,9 +5,6 @@ import com.example.navigationdrawer.Helper.ServerDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Category {
 
     @SerializedName("id")
@@ -19,12 +16,21 @@ public class Category {
     @SerializedName("category_image")
     @Expose
     private String categoryImage;
-    @SerializedName("sub_category")
+    @SerializedName("lft")
     @Expose
-    private List<Category> subCategory;
+    private Integer lft;
+    @SerializedName("rght")
+    @Expose
+    private Integer rght;
+    @SerializedName("tree_id")
+    @Expose
+    private Integer treeId;
     @SerializedName("level")
     @Expose
     private Integer level;
+    @SerializedName("parent")
+    @Expose
+    private Integer parent;
 
     public Integer getId() {
         return id;
@@ -53,12 +59,28 @@ public class Category {
         this.categoryImage = categoryImage;
     }
 
-    public List<Category> getSubCategory() {
-        return subCategory;
+    public Integer getLft() {
+        return lft;
     }
 
-    public void setSubCategory(List<Category> subCategory) {
-        this.subCategory = subCategory;
+    public void setLft(Integer lft) {
+        this.lft = lft;
+    }
+
+    public Integer getRght() {
+        return rght;
+    }
+
+    public void setRght(Integer rght) {
+        this.rght = rght;
+    }
+
+    public Integer getTreeId() {
+        return treeId;
+    }
+
+    public void setTreeId(Integer treeId) {
+        this.treeId = treeId;
     }
 
     public Integer getLevel() {
@@ -69,14 +91,12 @@ public class Category {
         this.level = level;
     }
 
-    public List<Category> getAllSubCategories() {
-        List<Category> allSubCategories = new ArrayList<>();
-        if (subCategory != null) {
-            for (Category subCategory : subCategory) {
-                allSubCategories.add(subCategory);
-                allSubCategories.addAll(subCategory.getAllSubCategories());
-            }
-        }
-        return allSubCategories;
+    public Integer getParent() {
+        return parent;
     }
+
+    public void setParent(Integer parent) {
+        this.parent = parent;
+    }
+
 }
