@@ -143,14 +143,14 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/icon_recyclerView"
                     android:layout_width="0dp"
-                    android:layout_height="100dp"
+                    android:layout_height="120dp"
                     android:background="@color/grey"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView9"
-                    tools:listitem="@layout/list_pop_item">
+                    tools:listitem="@layout/viewholder_categorie">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -168,7 +168,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/itme_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/viewholder_pop_list"/>
 
         </LinearLayout>
     </ScrollView>

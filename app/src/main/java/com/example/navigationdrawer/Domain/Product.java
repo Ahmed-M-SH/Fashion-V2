@@ -1,8 +1,12 @@
 package com.example.navigationdrawer.Domain;
 
 
+import com.example.navigationdrawer.Helper.ServerDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product {
 
@@ -12,6 +16,13 @@ public class Product {
     @SerializedName("rate")
     @Expose
     private Double rate;
+    @SerializedName("new_price")
+    @Expose
+    private Double new_price;
+
+    @SerializedName("promotion")
+    @Expose
+    private Double promotion;
     @SerializedName("review")
     @Expose
     private Integer review;
@@ -26,7 +37,7 @@ public class Product {
     private String description;
     @SerializedName("image")
     @Expose
-    private String image;
+    private List<String> image;
     @SerializedName("category")
     @Expose
     private Integer category;
@@ -79,11 +90,18 @@ public class Product {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public List<String> getImage() {
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i <image.size(); i++) {
+            if (image.get(i) != null && !image.get(i).startsWith("http")) {
+                result.add(ServerDetail.endpoint + image.get(i));
+            }
+            else result.add(image.get(i));
+        }
+        return result;
     }
 
-    public void setImage(String image) {
+    public void setImage(List<String> image) {
         this.image = image;
     }
 
@@ -93,6 +111,22 @@ public class Product {
 
     public void setCategory(Integer category) {
         this.category = category;
+    }
+
+    public Double getNew_price() {
+        return new_price;
+    }
+
+    public void setNew_price(Double new_price) {
+        this.new_price = new_price;
+    }
+
+    public Double getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(Double promotion) {
+        this.promotion = promotion;
     }
 
 }

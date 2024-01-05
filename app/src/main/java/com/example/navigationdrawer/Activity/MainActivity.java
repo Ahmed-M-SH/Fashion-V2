@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.bottom_home:
+//                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//                    finish();
                     return true;
                 case R.id.bottom_search:
                     startActivity(new Intent(getApplicationContext(), SearchActivity.class));
