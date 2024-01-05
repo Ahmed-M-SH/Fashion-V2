@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.HomeFragment">
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="MissingConstraints" />
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/headerbkg"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/ad_image"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/cat1" />
+
+                        <TextView
+                            android:id="@+id/ad_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="تخفيضات تصل الى 50%"
+                            android:textColor="#FFFFFF"
+                            android:textSize="25dp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/button2v"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="8dp"
+                            android:background="#FF4081"
+                            android:text="Buy Now"
+                            android:textColor="#FFFFFF" />
+
+                        <!-- أضف أي مكونات إضافية ترغب في إظهارها للإعلان -->
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="قائمة الاصناف"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.05"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/icon_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/grey"
+                        tools:listitem="@layout/list_pop_item"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="الصفحة الرئيسية"
+                    android:textColor="@color/red"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/itme_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

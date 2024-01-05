@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:background="@drawable/list_pop_itmes"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="200px"
+        android:layout_height="140px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19"
+        app:srcCompat="@drawable/cat1" />
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image" />
+
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="59dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:text="MakeUp5"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view10" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
