@@ -1,9 +1,9 @@
 package com.example.navigationdrawer.Helper;
 
-import com.example.fashion.Domain.ProductDetail;
-import com.example.fashion.Domain.ProductResult;
-import com.example.fashion.Domain.UserAuthentication;
-import com.example.fashion.Domain.UserProfile;
+import com.example.navigationdrawer.Domain.ProductDetail;
+import com.example.navigationdrawer.Domain.ProductResult;
+import com.example.navigationdrawer.Domain.UserAuthentication;
+import com.example.navigationdrawer.Domain.UserProfile;
 
 import java.util.List;
 

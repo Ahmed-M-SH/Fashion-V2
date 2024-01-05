@@ -1,7 +1,7 @@
 package com.example.navigationdrawer.Helper;
 
-import com.example.fashion.Domain.UserAuthentication;
-import com.example.fashion.Domain.UserProfile;
+import com.example.navigationdrawer.Domain.UserAuthentication;
+import com.example.navigationdrawer.Domain.UserProfile;
 
 import java.util.List;
 

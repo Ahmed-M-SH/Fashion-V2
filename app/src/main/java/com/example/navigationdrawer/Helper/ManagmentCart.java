@@ -2,8 +2,8 @@ package com.example.navigationdrawer.Helper;
 
 import android.content.Context;
 
-import com.example.fashion.Domain.PopularDomain;
-import com.example.fashion.Domain.ProductDetail;
+import com.example.navigationdrawer.Domain.PopularDomain;
+import com.example.navigationdrawer.Domain.ProductDetail;
 
 import java.util.ArrayList;
 

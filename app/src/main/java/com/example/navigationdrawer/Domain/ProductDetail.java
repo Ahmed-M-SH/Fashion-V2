@@ -1,7 +1,7 @@
 
 package com.example.navigationdrawer.Domain;
 
-import com.example.fashion.Helper.ServerDetail;
+import com.example.navigationdrawer.Helper.ServerDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
