@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.navigationdrawer'
+    namespace 'com.example.fashion'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.navigationdrawer"
+        applicationId "com.example.fashion"
         minSdk 24
         targetSdk 34
         versionCode 1
