@@ -20,8 +20,9 @@ public class DBHelper extends SQLiteOpenHelper {
     private ByteArrayOutputStream byteArrayOutputStream;
     private byte[] byteImage;
     private static String createTableQuery = "Create table LoginUser(username TEXT " +
-            ",price TEXT " +
-            ",image BLOB)";
+            ",email TEXT " +
+            ",image BLOB)"+
+            "";
     public DBHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;

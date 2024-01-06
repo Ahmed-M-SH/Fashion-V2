@@ -1,11 +1,12 @@
 
 package com.example.navigationdrawer.Domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.navigationdrawer.Helper.ServerDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class ProductDetail {
 
@@ -27,6 +28,9 @@ public class ProductDetail {
     @SerializedName("in_cart")
     @Expose
     private Boolean inCart;
+    @SerializedName("image")
+    @Expose
+    private List<String> image;
     @SerializedName("name")
     @Expose
     private String name;
@@ -36,12 +40,33 @@ public class ProductDetail {
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("image")
-    @Expose
-    private String image;
     @SerializedName("category")
     @Expose
     private Integer category;
+
+    @SerializedName("new_price")
+    @Expose
+    private Double new_price;
+
+    @SerializedName("promotion")
+    @Expose
+    private Double promotion;
+
+    public Double getNew_price() {
+        return new_price;
+    }
+
+    public void setNew_price(Double new_price) {
+        this.new_price = new_price;
+    }
+
+    public Double getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(Double promotion) {
+        this.promotion = promotion;
+    }
 
     public Integer getId() {
         return id;
@@ -91,6 +116,21 @@ public class ProductDetail {
         this.inCart = inCart;
     }
 
+    public List<String> getImage() {
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i <image.size(); i++) {
+            if (image.get(i) != null && !image.get(i).startsWith("http")) {
+                result.add(ServerDetail.endpoint + image.get(i));
+            }
+            else result.add(image.get(i));
+        }
+        return result;
+    }
+
+    public void setImage(List<String> image) {
+        this.image = image;
+    }
+
     public String getName() {
         return name;
     }
@@ -113,17 +153,6 @@ public class ProductDetail {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getImage() {
-        if (image != null && !image.startsWith("http")) {
-            return ServerDetail.endpoint + image;
-        }
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public Integer getCategory() {

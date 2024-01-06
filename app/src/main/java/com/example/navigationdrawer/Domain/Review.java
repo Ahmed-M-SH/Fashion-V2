@@ -1,12 +1,8 @@
+
 package com.example.navigationdrawer.Domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class Review {
 
@@ -52,22 +48,7 @@ public class Review {
     }
 
     public String getReviewDate() {
-
-        try {
-            // Parse the input string as a Date
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ");
-            inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-            Date date = inputFormat.parse(reviewDate);
-
-            // Define the desired date format
-            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-
-            // Format the Date using the output format
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return reviewDate; // Return the original date if parsing fails
-        }
+        return reviewDate;
     }
 
     public void setReviewDate(String reviewDate) {

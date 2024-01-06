@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
+import com.example.navigationdrawer.Activity.DetailsActivity;
 import com.example.navigationdrawer.Domain.ProductResult;
 import com.example.navigationdrawer.R;
 
@@ -48,9 +49,9 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
                 .into(holder.pic);
         }
         holder.itemView.setOnClickListener(view -> {
-//            Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
-//            intent.putExtra("product_id", items.getResults().get(position).getId());
-//            holder.itemView.getContext().startActivity(intent);
+            Intent intent = new Intent(holder.itemView.getContext(), DetailsActivity.class);
+            intent.putExtra("product_id", items.getResults().get(position).getId());
+            holder.itemView.getContext().startActivity(intent);
         });
     }
 

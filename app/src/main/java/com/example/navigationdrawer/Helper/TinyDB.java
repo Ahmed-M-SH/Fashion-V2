@@ -31,6 +31,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.navigationdrawer.Domain.CartProduct;
 import com.example.navigationdrawer.Domain.PopularDomain;
 import com.google.gson.Gson;
 
@@ -326,14 +327,13 @@ public class TinyDB {
     }
 
 
-    public ArrayList<PopularDomain> getListObject(String key){
+    public ArrayList<CartProduct> getListObject(String key){
         Gson gson = new Gson();
-
         ArrayList<String> objStrings = getListString(key);
-        ArrayList<PopularDomain> playerList =  new ArrayList<PopularDomain>();
+        ArrayList<CartProduct> playerList =  new ArrayList<CartProduct>();
 
         for(String jObjString : objStrings){
-            PopularDomain player  = gson.fromJson(jObjString,  PopularDomain.class);
+            CartProduct player  = gson.fromJson(jObjString,  CartProduct.class);
             playerList.add(player);
         }
         return playerList;
@@ -488,11 +488,11 @@ public class TinyDB {
     	putString(key, gson.toJson(obj));
     }
 
-    public void putListObject(String key, ArrayList<PopularDomain> playerList){
+    public void putListObject(String key, ArrayList<CartProduct> playerList){
         checkForNullKey(key);
         Gson gson = new Gson();
         ArrayList<String> objStrings = new ArrayList<String>();
-        for(PopularDomain player: playerList){
+        for(CartProduct player: playerList){
             objStrings.add(gson.toJson(player));
         }
         putListString(key, objStrings);
