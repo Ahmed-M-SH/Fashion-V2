@@ -25,7 +25,7 @@ import retrofit2.Response;
 public class CartFragment extends Fragment {
 
     private RecyclerView listviewCart;
-    private RecyclerView.Adapter adapterlistviewCart;
+    private CartAdapter adapterlistviewCart;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,5 +65,11 @@ public class CartFragment extends Fragment {
 
     private void initView(View view) {
         listviewCart = view.findViewById(R.id.listviewCart);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapterlistviewCart.managmentCart.commit();
     }
 }

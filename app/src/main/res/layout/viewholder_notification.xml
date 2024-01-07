@@ -61,6 +61,7 @@
         android:id="@+id/TextTime"
         android:layout_width="100dp"
         android:layout_height="30dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="time"

@@ -1,6 +1,7 @@
 package com.example.fashion.Helper;
 
 import com.example.fashion.Domain.CartProduct;
+import com.example.fashion.Domain.CartService;
 import com.example.fashion.Domain.Category;
 import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Domain.ProductResult;
@@ -31,6 +32,10 @@ public  interface ServerDetail {
     Call<List< UserProfile>> getUserProfile(@Header("Authorization") String authorization);
     @GET("/api/user/cart/")
     Call<List<CartProduct>> getUserCart(@Header("Authorization") String authorization);
+    @POST("/api/user/cart/add-list/")
+    Call<CartService> postCartAddList(@Header("Authorization") String authorization, @Body CartService cartItem);
+    @POST("/api/user/cart/delete-list/")
+    Call<CartService> postCartDeleteList(@Header("Authorization") String authorization,@Body CartService cartItem);
     @POST("/api/auth/login/")
     Call<UserAuthentication> getUserAuthentication(@Body UserAuthentication userAuthentication);
 

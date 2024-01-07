@@ -111,18 +111,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return true;
                 case R.id.bottom_search:
                     startActivity(new Intent(getApplicationContext(), SearchActivity.class));
-//                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                    finish();
                     return true;
                 case R.id.bottom_whatshot:
                     startActivity(new Intent(getApplicationContext(), WhatshotActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
+//                    finish();
                     return true;
                 case R.id.bottom_shopping_cart:
                     startActivity(new Intent(getApplicationContext(), CartActivity.class));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    finish();
+//                    finish();
                     return true;
             }
             return false;

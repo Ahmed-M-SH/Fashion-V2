@@ -39,6 +39,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -326,10 +327,10 @@ public class TinyDB {
     }
 
 
-    public ArrayList<CartProduct> getListObject(String key){
+    public List<CartProduct> getListObject(String key){
         Gson gson = new Gson();
-        ArrayList<String> objStrings = getListString(key);
-        ArrayList<CartProduct> playerList =  new ArrayList<CartProduct>();
+        List<String> objStrings = getListString(key);
+        List<CartProduct> playerList =  new ArrayList<CartProduct>();
 
         for(String jObjString : objStrings){
             CartProduct player  = gson.fromJson(jObjString,  CartProduct.class);
@@ -487,7 +488,7 @@ public class TinyDB {
     	putString(key, gson.toJson(obj));
     }
 
-    public void putListObject(String key, ArrayList<CartProduct> playerList){
+    public void putListObject(String key, List<CartProduct> playerList){
         checkForNullKey(key);
         Gson gson = new Gson();
         ArrayList<String> objStrings = new ArrayList<String>();

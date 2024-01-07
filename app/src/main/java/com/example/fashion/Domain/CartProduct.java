@@ -1,6 +1,7 @@
 
 package com.example.fashion.Domain;
 
+import com.example.fashion.Helper.ServerDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -22,9 +23,9 @@ public class CartProduct {
     @SerializedName("promotion")
     @Expose
     private Double promotion;
-    @SerializedName("product_id")
+    @SerializedName("product")
     @Expose
-    private Integer product_id;
+    private Integer product;
     @SerializedName("image")
     @Expose
     private String image;
@@ -85,15 +86,18 @@ public class CartProduct {
         this.promotion = promotion;
     }
 
-    public Integer getProduct_id() {
-        return product_id;
+    public Integer getProduct() {
+        return product;
     }
 
-    public void setProduct_id(Integer product_id) {
-        this.product_id = product_id;
+    public void setProduct(Integer product) {
+        this.product = product;
     }
 
     public String getImage() {
+        if (image != null && !image.startsWith("http")) {
+            return ServerDetail.endpoint + image;
+        }
         return image;
     }
 
