@@ -7,6 +7,7 @@ import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Domain.CartService;
 import com.example.fashion.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -22,7 +23,9 @@ public class ManagementCart {
         this.tinyDB = new TinyDB(context);
     }
 
+
     public void insertProduct(CartProduct item){
+
         List<CartProduct> listPop = getListCart();
         boolean existAlready=false;
 
@@ -85,6 +88,41 @@ public class ManagementCart {
         return fee;
     }
 
+    public void AddProduct(CartProduct product){
+        //        boolean isAuthent= tinyDB.getBoolean("isAuthent");
+//        if (isAuthent) {
+//            String userAuth = tinyDB.getString("userAuth");
+        String userAuth = "token 4ff24a3114344bc978419193eacdbca8316a82c8";
+        CartService cartServiceUpdate =new CartService();
+        List<CartProduct> products = new ArrayList<CartProduct>();
+        products.add(product);
+        cartServiceUpdate.setCartItem(products);
+        Call<CartService> call = RetrofitClient
+                .getInstance()
+                .getServerDetail()
+                .postCartAddList(userAuth, cartServiceUpdate);
+        call.enqueue(new Callback<CartService>() {
+            @Override
+            public void onResponse(Call<CartService> call, Response<CartService> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(context,"تمت الاضافة للسلة بنجاح", Toast.LENGTH_LONG).show();
+                }
+                else if (response.code() == 500) {
+                    Toast.makeText(context,"Error updating Cart",Toast.LENGTH_LONG).show();
+                }
+                else if (response.code()== 400){
+                    Toast.makeText(context,"known Error in Add to Cart:"+response.errorBody(),Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(context,"known Error in updating Cart",Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<CartService> call, Throwable t) {
+                Toast.makeText(context,"Chack your internet connection Error on Update cart",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
     public void commit(){
 //        boolean isAuthent= tinyDB.getBoolean("isAuthent");
 //        if (isAuthent) {
@@ -113,9 +151,7 @@ public class ManagementCart {
                         }
                         else {
                             Toast.makeText(context,"known Error in updating Cart",Toast.LENGTH_LONG).show();
-
                         }
-
                     }
                     @Override
                     public void onFailure(Call<CartService> call, Throwable t) {

@@ -16,10 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.fashion.Adapter.ImagePagerAdapter;
+import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Domain.ProductDetail;
+import com.example.fashion.Helper.ManagementCart;
 import com.example.fashion.Helper.RetrofitClient;
 import com.example.fashion.R;
 import com.like.LikeButton;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +33,9 @@ public class DetailsFragment extends Fragment {
     private Button addToCartBtn;
     private RecyclerView.Adapter adapterReview;
     private ViewPager2 viewPager;
+    private ManagementCart managementCart;
+
+    private CartProduct cartProduct;
     private RecyclerView recyclerReview;
     private TextView titleTxt, feeTxt, descriptionTxt, reviewTxt, scoreTxt, readMoreTxt,old_price;
     private ImageView picFood, backBtn,shareButton;
@@ -77,6 +84,8 @@ public class DetailsFragment extends Fragment {
                 viewPager.setAdapter(imagePagerAdapter);
 //                adapterReview = new ReviewAdapter(item);
 //                recyclerReview.setAdapter(adapterReview);
+
+                cartProduct.setProduct(item.getId());
             }
 
             @Override
@@ -104,6 +113,17 @@ public class DetailsFragment extends Fragment {
 //        managmentCart = new ManagmentCart(this);
         backBtn =view. findViewById(R.id.backArrowBtn);
         viewPager = view.findViewById(R.id.viewPaper_img);
+        cartProduct = new CartProduct();
+
+        managementCart = new ManagementCart(getActivity().getApplicationContext());
+        addToCartBtn =view.findViewById(R.id.addToCartBtn);
+
+        addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+           managementCart.AddProduct(cartProduct);
+            }
+        });
 
     }
 }
