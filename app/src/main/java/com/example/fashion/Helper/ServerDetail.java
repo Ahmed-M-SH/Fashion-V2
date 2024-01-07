@@ -3,6 +3,7 @@ package com.example.fashion.Helper;
 import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Domain.CartService;
 import com.example.fashion.Domain.Category;
+import com.example.fashion.Domain.Favorite;
 import com.example.fashion.Domain.NotificationDomain;
 import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Domain.ProductResult;
@@ -22,6 +23,7 @@ public  interface ServerDetail {
     static String port = "8000";
     public static String endpoint = "http://192.168.1.2:" + port;
 
+//    -------------- GET Methods  --------------
     @GET("/api/products/")
     Call <ProductResult> getProduct();
     @GET("/api/products/")
@@ -44,6 +46,11 @@ public  interface ServerDetail {
     Call<List<NotificationDomain>> ReadAllNotifications(@Header("Authorization") String authorization);
     @GET("/api/user/cart/")
     Call<List<CartProduct>> getUserCart(@Header("Authorization") String authorization);
+    @GET("/api/favorite/")
+    Call<List<Favorite>> getUserFavorite(@Header("Authorization") String authorization);
+
+
+//   ---------------- Post Methods ----------------
     @POST("/api/user/cart/add-list/")
     Call<CartService> postCartAddList(@Header("Authorization") String authorization, @Body CartService cartItem);
     @POST("/api/user/cart/delete-list/")
@@ -54,7 +61,6 @@ public  interface ServerDetail {
     @POST("/api/auth/sginup/")
     Call<UserProfile> getUserRegistration(@Body UserProfile userProfile);
 
-//    @POST("/api/auth/sginup/")
-//    Call<UserProfile> getUserRegistration(@Body UserProfile userProfile);
+
 
 }
