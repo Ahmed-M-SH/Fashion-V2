@@ -30,25 +30,28 @@
             android:id="@+id/userReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="4dp"
             android:background="@color/white"
             android:text="username"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/dataReview"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.11"
+            app:layout_constraintStart_toEndOf="@+id/dataReview"
+            app:layout_constraintTop_toTopOf="@+id/dataReview" />
 
         <TextView
             android:id="@+id/dataReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
             android:text="dataview"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/userReview"
-            app:layout_constraintEnd_toStartOf="@+id/imageView17"
-            app:layout_constraintTop_toTopOf="@+id/userReview" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView17"
@@ -81,13 +84,32 @@
             android:id="@+id/nump_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
             android:text="0"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/dataReview"
-            app:layout_constraintStart_toEndOf="@+id/view8"
-            app:layout_constraintTop_toTopOf="@+id/dataReview" />
+            app:layout_constraintBottom_toBottomOf="@+id/userReview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintStart_toEndOf="@+id/userReview"
+            app:layout_constraintTop_toTopOf="@+id/userReview" />
+
+        <com.like.LikeButton
+            android:id="@+id/liketieBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
+            app:icon_size="40dp"
+            app:icon_type="like"
+            app:layout_constraintBottom_toBottomOf="@+id/nump_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.86"
+            app:layout_constraintStart_toEndOf="@+id/nump_like"
+            app:layout_constraintTop_toTopOf="@+id/nump_like" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

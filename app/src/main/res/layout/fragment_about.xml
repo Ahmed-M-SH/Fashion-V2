@@ -1,18 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.AboutFragment">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/pic1"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
     <TextView
+        android:id="@+id/textViewAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About Us Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:textColor="@color/lavender"/>
+        android:text="اسم التطبيق"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="وصف التطبيق"
+        android:textSize="16sp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/buttonContactUs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="اتصل بنا"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/buttonShareWhatsApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="مشاركة عبر WhatsApp"
+        android:textSize="18sp"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>
