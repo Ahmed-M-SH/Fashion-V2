@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +18,10 @@ import com.example.fashion.Helper.ChangeNumberItemsListener;
 import com.example.fashion.Helper.ManagementCart;
 import com.example.fashion.R;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Viewholder> {
 
@@ -25,6 +29,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Viewholder> {
     private Context context;
     public ManagementCart managmentCart;
 
+    private Set<Integer> selectedPositions = new HashSet<>();
     public CartAdapter(List<CartProduct> items) {
         this.items = items;
     }
@@ -45,6 +50,26 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Viewholder> {
         holder.titleTxt.setText(""+items.get(position).getName());
         holder.feeEachitem.setText("$"+items.get(position).getNewPrice());
         holder.totalEachItem.setText(""+items.get(position).getTotal());
+
+
+
+        holder.checkBox.setChecked(selectedPositions.contains(position));
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedPositions.contains(position)) {
+                    selectedPositions.remove(position);
+                } else {
+                    selectedPositions.add(position);
+                }
+                notifyDataSetChanged();
+            }
+        });
+
+
+
+
         if (!items.get(position).getImage().isEmpty())
             Glide.with(holder.itemView.getContext())
                     .load(items.get(position).getImage())
@@ -91,9 +116,38 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Viewholder> {
     public int getItemCount() {
         return items.size();
     }
+    public void selectAllItems(boolean selectAll) {
+        if (selectAll) {
+            for (int i = 0; i < items.size(); i++) {
+                selectedPositions.add(i);
+            }
+        } else {
+            selectedPositions.clear();
+        }
+        notifyDataSetChanged();
+    }
+
+    public List<CartProduct> getSelectedItems() {
+        List<CartProduct> selectedItems = new ArrayList<>();
+        for (int position : selectedPositions) {
+            selectedItems.add(items.get(position));
+        }
+        return selectedItems;
+    }
+    public Double getTotal() {
+        List<CartProduct> selectedItems = new ArrayList<>();
+        Double total = 0.0;
+        for (int position : selectedPositions) {
+//            selectedItems.add(items.get(position));
+            total += items.get(position).getTotal();
+        }
+        return total;
+    }
+
 
     public class Viewholder extends  RecyclerView.ViewHolder {
         ImageView pic;
+        CheckBox checkBox;
         TextView feeEachitem,titleTxt,qtyTxt,totalEachItem,plusCartBtn,minusCartBtn;
 
         public Viewholder(@NonNull View itemView) {
@@ -105,6 +159,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Viewholder> {
             totalEachItem = (TextView) itemView.findViewById(R.id.totalEachItem);
             plusCartBtn = itemView.findViewById(R.id.pludCartBtn);
             minusCartBtn = itemView.findViewById(R.id.minusCartBtn);
+            checkBox = itemView.findViewById(R.id.checkBox);
+
         }
     }
 

@@ -91,19 +91,9 @@
             android:layout_marginTop="8dp"
             android:text="Delivery"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/textView29"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="22dp"
-            android:layout_marginTop="8dp"
-            android:text="Total Tax"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13"
-            tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/totalFeeTxt"
@@ -116,22 +106,13 @@
 
         <TextView
             android:id="@+id/deliveryTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="-YR"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taxTxt" />
-
-        <TextView
-            android:id="@+id/taxTxt"
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="-YR"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/totalTxt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/totalFeeTxt" />
 
@@ -143,7 +124,7 @@
             android:background="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+            tools:layout_editor_absoluteY="97dp" />
 
         <TextView
             android:id="@+id/textView29"

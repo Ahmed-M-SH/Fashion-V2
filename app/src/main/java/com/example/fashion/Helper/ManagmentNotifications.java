@@ -129,4 +129,23 @@ import retrofit2.Response;
          int random = new Random().nextInt(1000); // Adjust the range as needed
          return (int) (timestamp + random);
      }
+
+     public void readAllNotifications(){
+//                 boolean isAuthent= tinyDB.getBoolean("isAuthent");
+//        if (isAuthent) {
+//            String userAuth = tinyDB.getString("userAuth");
+         String userAuth = "token 4ff24a3114344bc978419193eacdbca8316a82c8";
+         Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().ReadAllNotifications(userAuth);
+         call.enqueue(new Callback<List<NotificationDomain>>() {
+             @Override
+             public void onResponse(Call<List<NotificationDomain>> call, Response<List<NotificationDomain>> response) {
+                 List<NotificationDomain> notifications = response.body();
+                    tinyDB.remove("unReadNotifications");
+             }
+             @Override
+             public void onFailure(Call<List<NotificationDomain>> call, Throwable t) {
+
+             }
+         });
+     }
 }

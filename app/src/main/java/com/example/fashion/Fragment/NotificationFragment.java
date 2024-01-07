@@ -22,6 +22,7 @@ import java.util.List;
 public class NotificationFragment extends Fragment {
     private RecyclerView notificationsRecyclerView;
     private TinyDB tinyDB;
+    private ManagmentNotifications managmentNotifications;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,8 +30,11 @@ public class NotificationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
         initView(view); // Initialize views here
+
         return view;
     }
+
+
 
     private void initView(View view) {
         notificationsRecyclerView = view.findViewById(R.id.listview);

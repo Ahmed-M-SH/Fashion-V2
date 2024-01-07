@@ -24,8 +24,8 @@ import retrofit2.Response;
 
 public class CartFragment extends Fragment {
 
-    private RecyclerView listviewCart;
-    private CartAdapter adapterlistviewCart;
+    public RecyclerView listviewCart;
+    public CartAdapter adapterlistviewCart;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,6 +63,32 @@ public class CartFragment extends Fragment {
         });
     }
 
+    public void onSelectAllChanged(boolean isChecked) {
+        if (adapterlistviewCart != null) {
+            adapterlistviewCart.selectAllItems(isChecked);
+
+            // Get the selected items
+            List<CartProduct> selectedItems = adapterlistviewCart.getSelectedItems();
+            // Do something with the selected items (e.g., display them, perform an action)
+            for (CartProduct selectedItem : selectedItems) {
+                // Do something with each selected item
+                // You can access selectedItem.getId(), selectedItem.getName(), etc.
+            }
+        }
+    }
+    public Double getTotal(){
+//        List<CartProduct> selectedItems = adapterlistviewCart.getSelectedItems();
+//        // Do something with the selected items (e.g., display them, perform an action)
+//        Double total = 0.0;
+//        if (selectedItems.size() > 0) {
+//            for (CartProduct selectedItem : selectedItems) {
+//                total += selectedItem.getTotal();
+//            }
+//        }
+//
+//        return total;
+       return adapterlistviewCart.getTotal();
+    }
     private void initView(View view) {
         listviewCart = view.findViewById(R.id.listviewCart);
     }

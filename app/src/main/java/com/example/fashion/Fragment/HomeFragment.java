@@ -93,6 +93,19 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        List<NotificationDomain> notificationCounts = tinyDB.getListObjectNotification("unReadNotifications");
+        if (notificationCounts.size() == 0) {
+            notification_status.setVisibility(View.INVISIBLE);
+        }
+        else {
+            notification_status.setVisibility(View.VISIBLE);
+            notification_status.setText("" + notificationCounts.size());
+        }
+    }
+
     private void sendProductRequest() {
         Call<ProductResult> call = RetrofitClient.getInstance()
                 .getServerDetail()
@@ -125,11 +138,7 @@ public class HomeFragment extends Fragment {
         notificationImg = view.findViewById(R.id.notificationImg);
         notification_status = view.findViewById(R.id.noitficatin_stetes);
         tinyDB = new TinyDB(getActivity().getApplicationContext());
-        List<NotificationDomain> notificationCounts = tinyDB.getListObjectNotification("unReadNotifications");
-        if (notificationCounts.size() == 0) {
-            notification_status.setVisibility(View.INVISIBLE);
-        }
-        notification_status.setText(""+notificationCounts.size());
+
         notificationImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
