@@ -48,7 +48,7 @@ public class FashionApplication extends Application {
 //            // For devices with API level lower than 26
 //            startService(new Intent(this, NotificationForegroundService.class));
 //        }
-        startForegroundService();
+//        startForegroundService();
     }
 
     private void startForegroundServiceWithDelay() {

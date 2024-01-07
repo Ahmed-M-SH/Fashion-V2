@@ -24,11 +24,15 @@ public  interface ServerDetail {
 
     @GET("/api/products/")
     Call <ProductResult> getProduct();
+    @GET("/api/products/")
+    Call <ProductResult> getProduct(@Header("Authorization") String authorization);
     @GET("/api/categorys/")
     Call <List<Category>> getCategory();
 
     @GET("/api/products/{productId}/")
     Call<ProductDetail> getProductDetail(@Path("productId") int productId);
+    @GET("/api/products/{productId}/")
+    Call<ProductDetail> getProductDetail(@Header("Authorization") String authorization,@Path("productId") int productId);
     @GET("/api/user/profile/")
     Call<List< UserProfile>> getUserProfile(@Header("Authorization") String authorization);
 
@@ -49,5 +53,8 @@ public  interface ServerDetail {
 
     @POST("/api/auth/sginup/")
     Call<UserProfile> getUserRegistration(@Body UserProfile userProfile);
+
+//    @POST("/api/auth/sginup/")
+//    Call<UserProfile> getUserRegistration(@Body UserProfile userProfile);
 
 }

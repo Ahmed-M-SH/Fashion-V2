@@ -102,7 +102,7 @@
             android:layout_marginEnd="8dp"
             android:padding="8dp"
             app:icon_size="40dp"
-            app:icon_type="like"
+            app:icon_type="thumb"
             app:layout_constraintBottom_toBottomOf="@+id/nump_like"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.86"

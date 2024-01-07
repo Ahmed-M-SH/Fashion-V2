@@ -7,15 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.fashion.Adapter.ImagePagerAdapter;
+import com.example.fashion.Adapter.ReviewAdapter;
 import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Helper.ManagementCart;
@@ -37,6 +40,7 @@ public class DetailsFragment extends Fragment {
 
     private CartProduct cartProduct;
     private RecyclerView recyclerReview;
+    private RatingBar ratingBar;
     private TextView titleTxt, feeTxt, descriptionTxt, reviewTxt, scoreTxt, readMoreTxt,old_price;
     private ImageView picFood, backBtn,shareButton;
 //    private Review reviewObject;
@@ -60,7 +64,10 @@ public class DetailsFragment extends Fragment {
 
     private void sendRequest() {
         int productId = getActivity().getIntent().getIntExtra("product_id", 0);
-        Call<ProductDetail> call = RetrofitClient.getInstance().getServerDetail().getProductDetail(productId);
+        //        if (isAuthent) {
+//            String userAuth = tinyDB.getString("userAuth");
+        String userAuth = "token 4ff24a3114344bc978419193eacdbca8316a82c8";
+        Call<ProductDetail> call = RetrofitClient.getInstance().getServerDetail().getProductDetail(userAuth,productId);
         call.enqueue(new Callback<ProductDetail>() {
             @Override
             public void onResponse(Call<ProductDetail> call, retrofit2.Response<ProductDetail> response) {
@@ -79,15 +86,15 @@ public class DetailsFragment extends Fragment {
                 old_price.setText("$"+item.getNew_price());
                 if (item.getInFavorite())
                     fovortieBtn.setLiked(true);
-//                recyclerReview.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+                float rate = (float) (0.0+item.getRate());
+                ratingBar.setRating(rate);
+                recyclerReview.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
                 ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(item.getImage());
                 viewPager.setAdapter(imagePagerAdapter);
-//                adapterReview = new ReviewAdapter(item);
-//                recyclerReview.setAdapter(adapterReview);
-
+                adapterReview = new ReviewAdapter(item);
+                recyclerReview.setAdapter(adapterReview);
                 cartProduct.setProduct(item.getId());
             }
-
             @Override
             public void onFailure(Call<ProductDetail> call, Throwable t) {
                 Toast.makeText(getActivity().getApplicationContext(), "An error has occured", Toast.LENGTH_LONG).show();
@@ -108,10 +115,11 @@ public class DetailsFragment extends Fragment {
         old_price = view.findViewById(R.id.old_price);
 //        picFood =view. findViewById(R.id.MakUp);
         readMoreTxt =view. findViewById(R.id.readMoreTxt);
-//        fovortieBtn =view.findViewById(R.id.fovortieBtn);
+        fovortieBtn =view.findViewById(R.id.fovortieBtn);
 //        shareButton =view. findViewById(R.id.shareButton);
 //        managmentCart = new ManagmentCart(this);
         backBtn =view. findViewById(R.id.backArrowBtn);
+        ratingBar =view.findViewById(R.id.ratingBar);
         viewPager = view.findViewById(R.id.viewPaper_img);
         cartProduct = new CartProduct();
 

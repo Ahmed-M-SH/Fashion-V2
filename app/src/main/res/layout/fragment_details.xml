@@ -45,7 +45,7 @@
                     android:layout_marginStart="8dp"
                     android:padding="8dp"
                     app:icon_size="40dp"
-                    app:icon_type="thumb"
+                    app:icon_type="heart"
                     app:layout_constraintBottom_toBottomOf="@+id/backArrowBtn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/backArrowBtn" />
