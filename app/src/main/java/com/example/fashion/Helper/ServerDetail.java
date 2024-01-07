@@ -3,6 +3,7 @@ package com.example.fashion.Helper;
 import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Domain.CartService;
 import com.example.fashion.Domain.Category;
+import com.example.fashion.Domain.NotificationDomain;
 import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Domain.ProductResult;
 import com.example.fashion.Domain.UserAuthentication;
@@ -30,6 +31,9 @@ public  interface ServerDetail {
     Call<ProductDetail> getProductDetail(@Path("productId") int productId);
     @GET("/api/user/profile/")
     Call<List< UserProfile>> getUserProfile(@Header("Authorization") String authorization);
+
+    @GET("/api/user/unread-notification/")
+    Call<List<NotificationDomain>> getUnreadNotifications(@Header("Authorization") String authorization);
     @GET("/api/user/cart/")
     Call<List<CartProduct>> getUserCart(@Header("Authorization") String authorization);
     @POST("/api/user/cart/add-list/")

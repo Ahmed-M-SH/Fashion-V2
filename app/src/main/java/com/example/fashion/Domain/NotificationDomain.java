@@ -4,7 +4,7 @@ package com.example.fashion.Domain;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Notification {
+public class NotificationDomain {
 
     @SerializedName("id")
     @Expose
