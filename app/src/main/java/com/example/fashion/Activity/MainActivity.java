@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +38,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
 //    private FloatingActionButton fab;
 
+//    private static final long DELAY_MILLIS = 30 * 1000; // 1 minute
+//
+//    private final Handler handler = new Handler(Looper.getMainLooper());
+//    private final Runnable periodicServiceStarter = new Runnable() {
+//        @Override
+//        public void run() {
+//            startForegroundService();
+//            handler.postDelayed(this, DELAY_MILLIS);
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
         }
+
+
 //        Intent serviceIntent = new Intent(this, NotificationCheckService.class);
 //        startService(serviceIntent);
 
