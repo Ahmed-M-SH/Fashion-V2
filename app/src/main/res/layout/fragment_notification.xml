@@ -9,9 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="12dp"
-        android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        android:scrollbars="vertical"
         tools:listitem="@layout/viewholder_notification" />
 
 

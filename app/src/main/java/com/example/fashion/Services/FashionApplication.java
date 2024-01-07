@@ -10,11 +10,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
-import androidx.work.Configuration;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
-import java.util.concurrent.TimeUnit;
-import com.example.fashion.Services.NotificationForegroundService;
 
 public class FashionApplication extends Application {
 
@@ -53,7 +48,7 @@ public class FashionApplication extends Application {
 //            // For devices with API level lower than 26
 //            startService(new Intent(this, NotificationForegroundService.class));
 //        }
-        startForegroundServiceWithDelay();
+        startForegroundService();
     }
 
     private void startForegroundServiceWithDelay() {

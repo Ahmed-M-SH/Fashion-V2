@@ -47,6 +47,7 @@ import retrofit2.Response;
                  List<NotificationDomain> notifications = response.body();
 
                  notificationsResult[0] = notifications;
+                 tinyDB.putListObjectNotification("unReadNotifications", notifications);
                  if (notifications.size() == 0) {
                      Log.i("Notification", "Notification Service is empty");
                  }
@@ -63,6 +64,36 @@ import retrofit2.Response;
          });
          return notificationsResult[0];
     }
+     public List<NotificationDomain> getAllNotifications(){
+//                 boolean isAuthent= tinyDB.getBoolean("isAuthent");
+//        if (isAuthent) {
+//            String userAuth = tinyDB.getString("userAuth");
+         String userAuth = "token 4ff24a3114344bc978419193eacdbca8316a82c8";
+         final List<NotificationDomain>[] notificationsResult = new List[]{new ArrayList()};
+         Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().getAllNotifications(userAuth);
+         call.enqueue(new Callback<List<NotificationDomain>>() {
+             @Override
+             public void onResponse(Call<List<NotificationDomain>> call, Response<List<NotificationDomain>> response) {
+                 List<NotificationDomain> notifications = response.body();
+
+                 notificationsResult[0] = notifications;
+                 tinyDB.putListObjectNotification("Notifications", notifications);
+                 if (notifications.size() == 0) {
+                     Log.i("Notification", "Notification Service is empty");
+                 }
+                 else {
+//                     makeNotifications(notifications);
+                     tinyDB.putObject("notifications", notifications);
+                 }
+             }
+
+             @Override
+             public void onFailure(Call<List<NotificationDomain>> call, Throwable t) {
+
+             }
+         });
+         return notificationsResult[0];
+     }
      public void makeNotifications(List<NotificationDomain> notifications) {
          NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -88,7 +119,6 @@ import retrofit2.Response;
                      notificationManager.createNotificationChannel(notificationChannel);
                  }
              }
-
              int notificationId = generateUniqueId();
              notificationManager.notify(notificationId, builder.build());
          }

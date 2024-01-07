@@ -4,6 +4,9 @@ package com.example.fashion.Domain;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class NotificationDomain {
 
     @SerializedName("id")
@@ -47,6 +50,30 @@ public class NotificationDomain {
     }
 
     public String getTimeCreated() {
+        DateTimeFormatter formatter = null;
+        LocalDateTime dateTime = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            dateTime = LocalDateTime.parse(timeCreated, formatter);
+            // Extract date and time as strings
+            String dateString = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            return dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        }
+
+        return timeCreated;
+    }
+
+    public String getDateCreated() {
+        DateTimeFormatter formatter = null;
+        LocalDateTime dateTime = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            dateTime = LocalDateTime.parse(timeCreated, formatter);
+            // Extract date and time as strings
+            return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//             dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        }
+
         return timeCreated;
     }
 

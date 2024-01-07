@@ -1,23 +1,29 @@
 package com.example.fashion.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fashion.Activity.NotificationActivity;
 import com.example.fashion.Adapter.HomeCategoryAdapter;
 import com.example.fashion.Adapter.HomeProductAdapter;
 import com.example.fashion.Domain.Category;
+import com.example.fashion.Domain.NotificationDomain;
 import com.example.fashion.Domain.ProductResult;
 import com.example.fashion.Helper.RetrofitClient;
+import com.example.fashion.Helper.TinyDB;
 import com.example.fashion.R;
 
 import java.util.List;
@@ -30,6 +36,9 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
     private RecyclerView productrecyclerView,categoryRecyclerView;
     RecyclerView.Adapter productAdapter,categoryAdapter;
+    AppCompatButton notification_status;
+    private ImageView notificationImg;
+    private TinyDB tinyDB;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,5 +122,20 @@ public class HomeFragment extends Fragment {
     private void initView(View view) {
         productrecyclerView=view.findViewById(R.id.itme_recyclerView);
         categoryRecyclerView =view.findViewById(R.id.icon_recyclerView);
+        notificationImg = view.findViewById(R.id.notificationImg);
+        notification_status = view.findViewById(R.id.noitficatin_stetes);
+        tinyDB = new TinyDB(getActivity().getApplicationContext());
+        List<NotificationDomain> notificationCounts = tinyDB.getListObjectNotification("unReadNotifications");
+        if (notificationCounts.size() == 0) {
+            notification_status.setVisibility(View.INVISIBLE);
+        }
+        notification_status.setText(""+notificationCounts.size());
+        notificationImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), NotificationActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 }

@@ -34,6 +34,8 @@ public  interface ServerDetail {
 
     @GET("/api/user/unread-notification/")
     Call<List<NotificationDomain>> getUnreadNotifications(@Header("Authorization") String authorization);
+    @GET("/api/user/all-notification/")
+    Call<List<NotificationDomain>> getAllNotifications(@Header("Authorization") String authorization);
     @GET("/api/user/cart/")
     Call<List<CartProduct>> getUserCart(@Header("Authorization") String authorization);
     @POST("/api/user/cart/add-list/")

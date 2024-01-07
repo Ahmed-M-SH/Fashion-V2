@@ -32,6 +32,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.fashion.Domain.CartProduct;
+import com.example.fashion.Domain.NotificationDomain;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -338,7 +339,17 @@ public class TinyDB {
         }
         return playerList;
     }
+    public List<NotificationDomain> getListObjectNotification(String key){
+        Gson gson = new Gson();
+        List<String> objStrings = getListString(key);
+        List<NotificationDomain> playerList =  new ArrayList<NotificationDomain>();
 
+        for(String jObjString : objStrings){
+            NotificationDomain player  = gson.fromJson(jObjString,  NotificationDomain.class);
+            playerList.add(player);
+        }
+        return playerList;
+    }
 
 
     public <T> T getObject(String key, Class<T> classOfT){
@@ -498,6 +509,15 @@ public class TinyDB {
         putListString(key, objStrings);
     }
 
+    public void putListObjectNotification(String key, List<NotificationDomain> playerList){
+        checkForNullKey(key);
+        Gson gson = new Gson();
+        ArrayList<String> objStrings = new ArrayList<String>();
+        for(NotificationDomain player: playerList){
+            objStrings.add(gson.toJson(player));
+        }
+        putListString(key, objStrings);
+    }
     /**
      * Remove SharedPreferences item with 'key'
      * @param key SharedPreferences key

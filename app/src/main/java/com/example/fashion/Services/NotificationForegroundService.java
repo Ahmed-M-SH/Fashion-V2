@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import androidx.core.app.NotificationCompat;
 
+import com.example.fashion.Activity.NotificationActivity;
 import com.example.fashion.Domain.NotificationDomain;
 import com.example.fashion.Fragment.NotificationFragment;
 import com.example.fashion.Helper.ManagmentNotifications;
@@ -59,10 +60,10 @@ public class NotificationForegroundService extends Service {
                             .setContentText(notification.getText())
                             .setAutoCancel(true);
 
-                    Intent intent = new Intent(context, NotificationFragment.class);
+                    Intent intent = new Intent(context, NotificationActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
                     builder.setContentIntent(pendingIntent);
 
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
