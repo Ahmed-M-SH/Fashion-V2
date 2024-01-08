@@ -26,6 +26,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.fashion.Fragment.AboutFragment;
+import com.example.fashion.Fragment.OrderListFragment;
 import com.example.fashion.Helper.DBHelper;
 import com.example.fashion.Fragment.HomeFragment;
 import com.example.fashion.R;
@@ -188,6 +189,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_about:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new AboutFragment()).commit();
+                break;
+            case R.id.nav_order:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new OrderListFragment()).commit();
                 break;
             case R.id.nav_logout:
                 Toast.makeText(this, "Logout!", Toast.LENGTH_SHORT).show();
