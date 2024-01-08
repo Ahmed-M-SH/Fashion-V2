@@ -14,6 +14,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -55,6 +56,17 @@ public  interface ServerDetail {
     Call<CartService> postCartAddList(@Header("Authorization") String authorization, @Body CartService cartItem);
     @POST("/api/user/cart/delete-list/")
     Call<CartService> postCartDeleteList(@Header("Authorization") String authorization,@Body CartService cartItem);
+
+    @POST("/api/favorite/delete-list/")
+    Call<List <Favorite>> postFavoriteDeleteList(@Header("Authorization") String authorization,@Body  List<Favorite> favoriteItem);
+    @POST("/api/favorite/delete-list/")
+    Call<List <Favorite>> postFavoriteDeleteList(@Header("Authorization") String authorization);
+
+    @DELETE("/api/favorite/{product_id}/delete/")
+    Call <Favorite> postFavoriteDelete(@Header("Authorization") String authorization,@Path("product_id") int productId);
+    @POST("/api/favorite/create/")
+    Call<Favorite> postFavoriteAdd(@Header("Authorization") String authorization,@Body CartProduct product);
+
     @POST("/api/auth/login/")
     Call<UserAuthentication> getUserAuthentication(@Body UserAuthentication userAuthentication);
 

@@ -13,15 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
+import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Domain.Favorite;
 import com.example.fashion.R;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Viewholder> {
 
     private Context context;
     private List<Favorite> items;
+    private Set<Integer> selectedPositions = new HashSet<>();
+
 
     public FavoriteAdapter(List<Favorite> items) {
         this.items = items;
@@ -49,12 +55,64 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Viewho
                     .into(holder.items_imagesView);
         }
 
+        holder.checkBox.setChecked(selectedPositions.contains(position));
+        int position2 = position;
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedPositions.contains(position2)) {
+                    selectedPositions.remove(position2);
+                } else {
+                    selectedPositions.add(position2);
+                }
+                notifyDataSetChanged();
+            }
+        });
+        holder.deletePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                items.remove(position);
+                notifyItemRemoved(position2);
+                notifyItemRangeChanged(position2, getItemCount());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return items.size();
     }
+
+    public void selectAllItems(boolean selectAll) {
+        if (selectAll) {
+            for (int i = 0; i < items.size(); i++) {
+                selectedPositions.add(i);
+            }
+        } else {
+            selectedPositions.clear();
+        }
+        notifyDataSetChanged();
+    }
+
+    public List<Favorite> getSelectedItems() {
+        List<Favorite> selectedItems = new ArrayList<>();
+        for (int position : selectedPositions) {
+            selectedItems.add(items.get(position));
+        }
+        return selectedItems;
+    }
+
+    public void deleteSelectedItems() {
+//        List<Favorite> selectedItems = new ArrayList<>();
+        for (int position : selectedPositions) {
+//            selectedItems.add(items.get(position));
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, getItemCount());
+            notifyDataSetChanged();
+        }
+    }
+
 
     public class Viewholder extends RecyclerView.ViewHolder {
         ImageView items_imagesView,deletePic;

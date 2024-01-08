@@ -20,16 +20,20 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.fashion.Adapter.ImagePagerAdapter;
 import com.example.fashion.Adapter.ReviewAdapter;
 import com.example.fashion.Domain.CartProduct;
+import com.example.fashion.Domain.Favorite;
 import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Helper.ManagementCart;
 import com.example.fashion.Helper.RetrofitClient;
 import com.example.fashion.R;
 import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailsFragment extends Fragment {
 
@@ -126,10 +130,55 @@ public class DetailsFragment extends Fragment {
         managementCart = new ManagementCart(getActivity().getApplicationContext());
         addToCartBtn =view.findViewById(R.id.addToCartBtn);
 
+        fovortieBtn.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                fovortieBtn.setLiked(true);
+                addToFavorite();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                removeFromFavorite();
+            }
+        });
         addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
            managementCart.AddProduct(cartProduct);
+            }
+        });
+
+    }
+
+    public void addToFavorite(){
+        String auth ="token 4ff24a3114344bc978419193eacdbca8316a82c8";
+
+        Call<Favorite> call = RetrofitClient.getInstance().getServerDetail().postFavoriteAdd(auth,cartProduct);
+        call.enqueue(new Callback<Favorite>() {
+            @Override
+            public void onResponse(Call<Favorite> call, Response<Favorite> response) {
+            }
+
+            @Override
+            public void onFailure(Call<Favorite> call, Throwable t) {
+            }
+        });
+    }
+
+    public void removeFromFavorite(){
+        String auth ="token 4ff24a3114344bc978419193eacdbca8316a82c8";
+        List<Favorite> favoriteList = new ArrayList<>();
+        Call<Favorite> call = RetrofitClient.getInstance().getServerDetail().postFavoriteDelete(auth,cartProduct.getProduct());
+        call.enqueue(new Callback<Favorite>() {
+            @Override
+            public void onResponse(Call<Favorite> call, Response<Favorite> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Favorite> call, Throwable t) {
+
             }
         });
 

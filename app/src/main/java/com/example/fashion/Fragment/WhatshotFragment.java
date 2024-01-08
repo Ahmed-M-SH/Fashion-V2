@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fashion.Adapter.FavoriteAdapter;
+import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Domain.Favorite;
 import com.example.fashion.Helper.RetrofitClient;
 import com.example.fashion.R;
@@ -34,7 +35,7 @@ public class WhatshotFragment extends Fragment {
         return view;
     }
 
-    private void sendRequest() {
+    public void sendRequest() {
         String auth ="token 4ff24a3114344bc978419193eacdbca8316a82c8";
         Call<List<Favorite>> call = RetrofitClient.getInstance().getServerDetail().getUserFavorite(auth);
         call.enqueue(new Callback<List<Favorite>>() {
@@ -43,6 +44,7 @@ public class WhatshotFragment extends Fragment {
                 List<Favorite> favorites = response.body();
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.VERTICAL,false));
                 favoriteAdapter = new FavoriteAdapter(favorites);
+//                favoriteAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(favoriteAdapter);
             }
 
@@ -51,6 +53,28 @@ public class WhatshotFragment extends Fragment {
 
             }
         });
+    }
+public void updateData(){
+                    favoriteAdapter.notifyDataSetChanged();
+}
+
+    public void onSelectAllChanged(boolean isChecked) {
+        if (favoriteAdapter != null) {
+            favoriteAdapter.selectAllItems(isChecked);
+
+            // Get the selected items
+            List<Favorite> selectedItems = favoriteAdapter.getSelectedItems();
+            // Do something with the selected items (e.g., display them, perform an action)
+            for (Favorite selectedItem : selectedItems) {
+                // Do something with each selected item
+                // You can access selectedItem.getId(), selectedItem.getName(), etc.
+            }
+        }
+    }
+
+    public List<Favorite> getSelectedItems() {
+
+        return favoriteAdapter.getSelectedItems();
     }
 
     private void initView(View view) {
