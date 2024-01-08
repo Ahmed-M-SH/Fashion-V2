@@ -12,9 +12,12 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.fashion.Activity.NotificationActivity;
 import com.example.fashion.Adapter.HomeCategoryAdapter;
@@ -26,6 +29,7 @@ import com.example.fashion.Helper.RetrofitClient;
 import com.example.fashion.Helper.TinyDB;
 import com.example.fashion.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,13 +43,12 @@ public class HomeFragment extends Fragment {
     AppCompatButton notification_status;
     private ImageView notificationImg;
     private TinyDB tinyDB;
-
+    private ViewPager2 viewPager;
+    private MyAdapter adapter;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        initView(view);
-        sendProductRequest();
-        sendCategoryRequest();
 
     }
 
@@ -91,6 +94,7 @@ public class HomeFragment extends Fragment {
                 Log.i("onFailure", "Error: " + t.getMessage());
             }
         });
+
     }
 
     @Override
@@ -146,5 +150,51 @@ public class HomeFragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+
+    }
+
+    public View onCreateViewView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        initView(view); // Initialize views here
+
+        sendProductRequest();
+        sendCategoryRequest();
+
+        viewPager = view.findViewById(R.id.view_pager);
+        adapter = new MyAdapter(getActivity(), getImages());
+        viewPager.setAdapter(adapter);
+
+        return view;
+    }
+
+    private List<Integer> getImages() {
+        List<Integer> images = new ArrayList<>();
+        images.add(R.drawable.cat1); // أضف مورد الصورة الأولى هنا
+        images.add(R.drawable.cat1); // أضف مورد الصورة الثانية هنا
+        images.add(R.drawable.cat1); // أضف مورد الصورة الثالثة هنا
+        // وهكذا يمكنك إضافة المزيد من الصور حسب الحاجة
+
+        return images;
+    }
+
+    private static class MyAdapter extends FragmentStateAdapter {
+        private List<Integer> images;
+
+        public MyAdapter(FragmentActivity fragmentActivity, List<Integer> images) {
+            super(fragmentActivity);
+            this.images = images;
+        }
+
+        @Override
+        public int getItemCount() {
+            return images.size();
+        }
+
+        @Override
+        public Fragment createFragment(int position) {
+            int imageRes = images.get(position);
+            return ImageFragment.newInstance(imageRes);
+        }
     }
 }
