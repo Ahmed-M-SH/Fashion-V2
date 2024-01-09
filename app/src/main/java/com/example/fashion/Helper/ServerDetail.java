@@ -5,6 +5,7 @@ import com.example.fashion.Domain.CartService;
 import com.example.fashion.Domain.Category;
 import com.example.fashion.Domain.Favorite;
 import com.example.fashion.Domain.NotificationDomain;
+import com.example.fashion.Domain.PaymentDetail;
 import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Domain.ProductResult;
 import com.example.fashion.Domain.UserAuthentication;
@@ -49,6 +50,8 @@ public  interface ServerDetail {
     Call<List<CartProduct>> getUserCart(@Header("Authorization") String authorization);
     @GET("/api/favorite/")
     Call<List<Favorite>> getUserFavorite(@Header("Authorization") String authorization);
+    @GET("/api/orders/payment-detail/")
+    Call<PaymentDetail> getPaymentDetail(@Header("Authorization") String authorization);
 
 
 //   ---------------- Post Methods ----------------

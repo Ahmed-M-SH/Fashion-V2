@@ -1,6 +1,9 @@
 package com.example.fashion.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -18,6 +21,7 @@ public class CartActivity extends AppCompatActivity {
   private CheckBox selectAllCheckBox;
   private TextView totalFeeTxt,deliveryTxt,totalTxt;
     private CartFragment fragment;
+    private Button orderBtnn;
 
 
 
@@ -52,6 +56,15 @@ public class CartActivity extends AppCompatActivity {
                 if (fragment != null) {
                     fragment.onSelectAllChanged(isChecked);
                 }
+            }
+        });
+
+        orderBtnn = findViewById(R.id.orderBtnn);
+        orderBtnn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),PaymentActivity.class);
+                startActivity(intent);
             }
         });
 
