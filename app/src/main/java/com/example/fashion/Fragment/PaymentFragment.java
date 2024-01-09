@@ -46,7 +46,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class PaymentFragment extends Fragment {
         private static final int IMAGE_PICK_REQUEST = 1;
         private ImageView imageView;
@@ -62,8 +61,6 @@ public class PaymentFragment extends Fragment {
     EditText phone_number1,address_payment,phone_number2;
     Button send_btn_final_payment2;
     private View view;
-
-
 
     @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,

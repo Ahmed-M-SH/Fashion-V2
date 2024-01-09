@@ -3,25 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:clipChildren="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView17"
+        <View
+            android:id="@+id/view8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/userReview"
-            app:layout_constraintEnd_toStartOf="@+id/userReview"
-            app:layout_constraintTop_toTopOf="@+id/userReview"
-            app:srcCompat="@color/grey" />
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:background="#B5FAE6F9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/userReview"
@@ -50,22 +53,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/imageView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/userReview"
+            app:layout_constraintEnd_toStartOf="@+id/userReview"
+            app:layout_constraintTop_toTopOf="@+id/userReview"
+            app:srcCompat="@color/grey" />
+
         <TextView
             android:id="@+id/reviewTxt"
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@color/white"
             android:text="Review"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/view8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/liketieBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/dataReview" />
+
+
+        <TextView
+            android:id="@+id/nump_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="0"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/userReview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintStart_toEndOf="@+id/userReview"
+            app:layout_constraintTop_toTopOf="@+id/userReview" />
 
         <com.like.LikeButton
             android:id="@+id/liketieBtn"
@@ -83,18 +109,6 @@
             app:layout_constraintStart_toEndOf="@+id/nump_like"
             app:layout_constraintTop_toTopOf="@+id/nump_like" />
 
-        <TextView
-            android:id="@+id/nump_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="0"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/userReview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.65"
-            app:layout_constraintStart_toEndOf="@+id/userReview"
-            app:layout_constraintTop_toTopOf="@+id/userReview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
