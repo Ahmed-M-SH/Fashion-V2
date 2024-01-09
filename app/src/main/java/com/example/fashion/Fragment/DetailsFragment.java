@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.fashion.Adapter.ImagePagerAdapter;
 import com.example.fashion.Adapter.ReviewAdapter;
 import com.example.fashion.Domain.CartProduct;
+import com.example.fashion.Domain.CreateReview;
 import com.example.fashion.Domain.Favorite;
 import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Helper.ManagementCart;
@@ -39,12 +41,15 @@ public class DetailsFragment extends Fragment {
 
     private Button addToCartBtn;
     private RecyclerView.Adapter adapterReview;
+    private int productId;
     private ViewPager2 viewPager;
     private ManagementCart managementCart;
 
     private CartProduct cartProduct;
     private RecyclerView recyclerReview;
     private RatingBar ratingBar;
+    private EditText editTextReview;
+    private Button editBttReview;
     private TextView titleTxt, feeTxt, descriptionTxt, reviewTxt, scoreTxt, readMoreTxt,old_price;
     private ImageView picFood, backBtn,shareButton;
 //    private Review reviewObject;
@@ -67,7 +72,7 @@ public class DetailsFragment extends Fragment {
     }
 
     private void sendRequest() {
-        int productId = getActivity().getIntent().getIntExtra("product_id", 0);
+         productId = getActivity().getIntent().getIntExtra("product_id", 0);
         //        if (isAuthent) {
 //            String userAuth = tinyDB.getString("userAuth");
         String userAuth = "token 4ff24a3114344bc978419193eacdbca8316a82c8";
@@ -80,6 +85,7 @@ public class DetailsFragment extends Fragment {
 //                Glide.with()
 //                        .load(item.getImage())
 //                        .into(picFood);
+
                 Log.i("OnSuccesses", "Respnse: " + response.body().toString());
 
                 titleTxt.setText("" + item.getName());
@@ -109,6 +115,8 @@ public class DetailsFragment extends Fragment {
 
 
     private void initView(View view) {
+        editBttReview = view.findViewById(R.id.editBttReview);
+        editTextReview = view.findViewById(R.id.editTextReview);
         recyclerReview =view. findViewById(R.id.recylerReview);
         addToCartBtn = view.findViewById(R.id.addToCartBtn);
         titleTxt =view.findViewById(R.id.titleTxt);
@@ -125,6 +133,12 @@ public class DetailsFragment extends Fragment {
         backBtn =view. findViewById(R.id.backArrowBtn);
         ratingBar =view.findViewById(R.id.ratingBar);
         viewPager = view.findViewById(R.id.viewPaper_img);
+        editBttReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendReviewRequest();
+            }
+        });
         cartProduct = new CartProduct();
 
         managementCart = new ManagementCart(getActivity().getApplicationContext());
@@ -148,7 +162,6 @@ public class DetailsFragment extends Fragment {
            managementCart.AddProduct(cartProduct);
             }
         });
-
     }
 
     public void addToFavorite(){
@@ -182,5 +195,26 @@ public class DetailsFragment extends Fragment {
             }
         });
 
+    }
+
+    public void sendReviewRequest(){
+        if (editTextReview.getText().toString().isEmpty()){
+            editTextReview.setError("يرجاء كتابة التعليق");
+            return;}
+        String auth ="token 4ff24a3114344bc978419193eacdbca8316a82c8";
+        CreateReview review = new CreateReview(productId,editTextReview.getText().toString());
+        Call<Favorite> call = RetrofitClient.getInstance().getServerDetail().postReview(auth,review);
+        call.enqueue(new Callback<Favorite>() {
+            @Override
+            public void onResponse(Call<Favorite> call, Response<Favorite> response) {
+                Toast.makeText(requireContext(),"تم ارسال تعليقك بنجاح", Toast.LENGTH_LONG).show();
+                editTextReview.setText("");
+            }
+
+            @Override
+            public void onFailure(Call<Favorite> call, Throwable t) {
+                Toast.makeText(requireContext(),"حدث خطاء اثناء ارسال التعليق", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

@@ -3,6 +3,7 @@ package com.example.fashion.Helper;
 import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Domain.CartService;
 import com.example.fashion.Domain.Category;
+import com.example.fashion.Domain.CreateReview;
 import com.example.fashion.Domain.Favorite;
 import com.example.fashion.Domain.MakeOreder;
 import com.example.fashion.Domain.NotificationDomain;
@@ -72,6 +73,8 @@ public  interface ServerDetail {
 
     @DELETE("/api/favorite/{product_id}/delete/")
     Call <Favorite> postFavoriteDelete(@Header("Authorization") String authorization,@Path("product_id") int productId);
+    @POST("/api/products/review/create/")
+    Call <Favorite> postReview(@Header("Authorization") String authorization, @Body CreateReview review);
     @POST("/api/favorite/create/")
     Call<Favorite> postFavoriteAdd(@Header("Authorization") String authorization,@Body CartProduct product);
 
