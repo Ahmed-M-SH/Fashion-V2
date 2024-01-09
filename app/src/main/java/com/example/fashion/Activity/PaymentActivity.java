@@ -25,7 +25,6 @@ public class PaymentActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
-//
 //        backBttnn = findViewById(R.id.backBttnn);
 //        backBttnn.setOnClickListener(new View.OnClickListener() {
 //            @Override

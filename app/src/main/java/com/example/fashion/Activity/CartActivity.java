@@ -1,5 +1,6 @@
 package com.example.fashion.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,12 +10,17 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Fragment.CartFragment;
 import com.example.fashion.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
   private ImageView backArrowBtn;
@@ -63,11 +69,29 @@ public class CartActivity extends AppCompatActivity {
         orderBtnn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),PaymentActivity.class);
-                startActivity(intent);
+                List<CartProduct> productsItem = fragment.adapterlistviewCart.getSelectedItems();
+                if (productsItem.size() > 0) {
+                    Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                    intent.putExtra("productItem",new ArrayList<>(productsItem));
+                    startActivity(intent);
+                }
+                else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CartActivity.this);
+                    alertDialogBuilder.setTitle("خطاء في الطلب");  // Set the title of the dialog
+                    alertDialogBuilder.setMessage("يرجاء تحديد منتجاتك التي تريد طلبها");  // Set the message of the dialog
+
+                    alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Positive button clicked
+                            dialog.dismiss();  // Dismiss the dialog if needed
+                        }
+                    });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
             }
         });
-
     }
 
     @Override

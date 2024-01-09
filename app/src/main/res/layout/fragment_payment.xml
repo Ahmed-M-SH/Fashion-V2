@@ -68,7 +68,7 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/spinner_currency"
-                        android:layout_width="100dp"
+                        android:layout_width="150dp"
                         android:layout_height="50dp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView11"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +84,7 @@
                     <TextView
                         android:id="@+id/textView27"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="25dp"
                         android:layout_marginStart="8dp"
                         android:text="العنوان"
                         android:textSize="20dp"
@@ -112,7 +112,7 @@
                     <TextView
                         android:id="@+id/textView14"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="25dp"
                         android:text="رقم الهاتف:"
                         android:textSize="20dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -136,14 +136,15 @@
                     android:layout_height="match_parent">
 
 
-
                     <TextView
                         android:id="@+id/textView15"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="25dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginBottom="32dp"
                         android:text="طريقة الدفع"
                         android:textSize="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -152,12 +153,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="8dp"
+                        android:contextClickable="true"
+
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:contextClickable="true">
+                        app:layout_constraintTop_toBottomOf="@+id/textView15">
 
                     </RadioGroup>
 
@@ -171,6 +171,7 @@
                         android:id="@+id/textView28"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="اثبات الدفع"
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -276,15 +277,11 @@
                     android:id="@+id/send_btn_final_payment2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:background="@color/red"
                     android:text="تاكيد"
                     android:textSize="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginBottom="10dp"
-
+                    android:layout_marginBottom="20dp"
                     />
 
             </LinearLayout>
