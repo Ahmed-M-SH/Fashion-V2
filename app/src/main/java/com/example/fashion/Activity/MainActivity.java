@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SettingsFragment()).commit();
-                startActivity(new Intent(getApplicationContext(),UploadActivity.class));
+                startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
                 break;
             case R.id.nav_share:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
