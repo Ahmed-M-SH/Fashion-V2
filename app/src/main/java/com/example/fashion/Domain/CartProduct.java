@@ -5,7 +5,9 @@ import com.example.fashion.Helper.ServerDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CartProduct {
+import java.io.Serializable;
+
+public class CartProduct implements Serializable {
 
 
     @SerializedName("name")

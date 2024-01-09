@@ -59,6 +59,7 @@
                         android:id="@+id/textView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:text="اختر العملة"
                         android:textSize="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,7 +68,7 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/spinner_currency"
-                        android:layout_width="100dp"
+                        android:layout_width="150dp"
                         android:layout_height="50dp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView11"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +84,8 @@
                     <TextView
                         android:id="@+id/textView27"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="8dp"
                         android:text="العنوان"
                         android:textSize="20dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -105,12 +107,12 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="70dp">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/textView14"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="25dp"
                         android:text="رقم الهاتف:"
                         android:textSize="20dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -131,12 +133,45 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="32dp"
+                        android:text="طريقة الدفع"
+                        android:textSize="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioGroup
+                        android:id="@+id/paynent_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:contextClickable="true"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+                    </RadioGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/textView28"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:text="اثبات الدفع"
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -231,12 +266,24 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="textPostalAddress"
+
                         app:layout_constraintBottom_toBottomOf="@+id/textView30"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toEndOf="@+id/textView30"
                         app:layout_constraintTop_toTopOf="@+id/textView30" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/send_btn_final_payment2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/red"
+                    android:text="تاكيد"
+                    android:textSize="20dp"
+                    android:layout_marginBottom="20dp"
+                    />
 
             </LinearLayout>
         </ScrollView>
