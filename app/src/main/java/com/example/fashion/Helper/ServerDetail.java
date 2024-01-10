@@ -11,6 +11,7 @@ import com.example.fashion.Domain.OrderDetail;
 import com.example.fashion.Domain.PaymentDetail;
 import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Domain.ProductResult;
+import com.example.fashion.Domain.Promotion;
 import com.example.fashion.Domain.UserAuthentication;
 import com.example.fashion.Domain.UserProfile;
 
@@ -37,6 +38,9 @@ public  interface ServerDetail {
 //    -------------- GET Methods  --------------
     @GET("/api/products/")
     Call <ProductResult> getProduct();
+    @GET("/api/products/promotion/")
+    Call <List<Promotion>> getPromotion();
+
     @GET("/api/products/")
     Call <ProductResult> getProduct(@Query("category") int category);
     @GET("/api/products/")
