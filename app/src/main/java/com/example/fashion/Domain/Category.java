@@ -5,7 +5,9 @@ import com.example.fashion.Helper.ServerDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -31,6 +33,19 @@ public class Category {
     @SerializedName("parent")
     @Expose
     private Integer parent;
+
+    @SerializedName("have_children")
+    @Expose
+
+    private Boolean have_children;
+
+    public Boolean getHave_children() {
+        return have_children;
+    }
+
+    public void setHave_children(Boolean have_children) {
+        this.have_children = have_children;
+    }
 
     public Integer getId() {
         return id;

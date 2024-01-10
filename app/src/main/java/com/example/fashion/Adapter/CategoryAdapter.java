@@ -1,7 +1,5 @@
 package com.example.fashion.Adapter;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -23,31 +21,28 @@ import com.example.fashion.R;
 
 import java.util.List;
 
-public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapter.Viewholder>{
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewholder>{
 
-    public HomeCategoryAdapter(List<Category> items) {
+    public CategoryAdapter(List<Category> items) {
         this.items = items;
     }
-
     List<Category> items;
     Context context;
-
-    public HomeCategoryAdapter(List<Category> items, int category) {
+    public CategoryAdapter(List<Category> items, int category) {
         this.items = items;
         this.category = category;
     }
     public int category;
     @NonNull
     @Override
-    public HomeCategoryAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+    public CategoryAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate= LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_categorie,parent, false);
         context = parent.getContext();
-        return new HomeCategoryAdapter.Viewholder(inflate);
+        return new CategoryAdapter.Viewholder(inflate);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomeCategoryAdapter.Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull CategoryAdapter.Viewholder holder, int position) {
         holder.titleTxt.setText(items.get(position).getName());
         int position2 = position;
         if (!items.get(position).getCategoryImage().isEmpty())
@@ -62,10 +57,16 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
             @Override
             public void onClick(View view) {
                 Intent intent;
+//                if (listener != null) {
+//                    listener.onCategoryClick(items.get(position2).getId());
+//                }
             if (items.get(position2).getHave_children()){
                 intent = new Intent(context, CategoryActivity.class);
                 intent.putExtra("have_children",items.get(position2).getHave_children());
-                intent.putExtra("category",items.get(position2).getId());
+//                if (category == 0)
+//                intent.putExtra("category",category);
+//                else
+                    intent.putExtra("category",items.get(position2).getId());
             }
             else {
                 intent = new Intent(context, ProductListActivity.class);
@@ -76,7 +77,6 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return items.size();
@@ -91,7 +91,13 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
             titleTxt = (TextView) itemView.findViewById(R.id.titleTxt);
             image = (ImageView) itemView.findViewById(R.id.image);
             constraintContainer = itemView.findViewById(R.id.constraintContainer);
+
         }
     }
 
+    public void updateData(List<Category> newData) {
+        items.clear();
+        items.addAll(newData);
+        notifyDataSetChanged();
+    }
 }

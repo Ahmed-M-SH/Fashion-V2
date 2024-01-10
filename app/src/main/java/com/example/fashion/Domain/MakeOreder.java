@@ -7,12 +7,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class MakeOreder {
 
+    public List<CartProduct> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<CartProduct> orderItems) {
+        this.orderItems = orderItems;
+    }
+
     @SerializedName("order_items")
     @Expose
     private List<CartProduct> orderItems;
     @SerializedName("proof_of_payment_image")
     @Expose
-    private Object proofOfPaymentImage;
+    private String proofOfPaymentImage;
     @SerializedName("customer_name")
     @Expose
     private String customerName;
@@ -44,21 +52,27 @@ public class MakeOreder {
     @Expose
     private Integer paymentType;
 
-    public List<CartProduct> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<CartProduct> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public Object getProofOfPaymentImage() {
+    public String getProofOfPaymentImage() {
         return proofOfPaymentImage;
     }
 
-    public void setProofOfPaymentImage(Object proofOfPaymentImage) {
+    public void setProofOfPaymentImage(String proofOfPaymentImage) {
         this.proofOfPaymentImage = proofOfPaymentImage;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+
+
 
     public String getCustomerName() {
         return customerName;

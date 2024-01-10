@@ -1,7 +1,9 @@
 package com.example.fashion.Fragment;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,9 +11,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +35,12 @@ import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Domain.City;
 import com.example.fashion.Domain.Currency;
 import com.example.fashion.Domain.MakeOreder;
+import com.example.fashion.Domain.OrderItem;
 import com.example.fashion.Domain.PaymentDetail;
 import com.example.fashion.Domain.PaymentType;
 import com.example.fashion.Helper.RetrofitClient;
 import com.example.fashion.R;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -142,6 +149,12 @@ public class PaymentFragment extends Fragment {
             });
         }
         private void showDownloadDialog(String imageUrl) {
+            // Check if the permission is granted
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                // If not, request the permission
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            }
+
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             intent.setType("image/*");
             startActivityForResult(intent, IMAGE_PICK_REQUEST);
@@ -216,7 +229,7 @@ public class PaymentFragment extends Fragment {
                 return;
             }
             if (phone_number2.getText().toString().isEmpty()){
-                order.setCustomerPhone2("");
+                order.setCustomerPhone2(" ");
             }
             if (address_payment.getText().toString().isEmpty()){
                 address_payment.setError("هذا الحقل ضروري");
@@ -224,61 +237,105 @@ public class PaymentFragment extends Fragment {
             }
             order.setCustomerPhone(phone_number1.getText().toString());
             order.setAddress(address_payment.getText().toString());
+            order.setCustomerPhone2(phone_number2.getText().toString());
+
             List<CartProduct> orderItems = (List<CartProduct>) requireActivity().getIntent().getSerializableExtra("productItem");
+//            List<OrderItem> formattedOrderItems = new ArrayList<>();
+
+//            for (CartProduct cartProduct : orderItems) {
+//                OrderItem orderItem = new OrderItem();
+//                orderItem.setProduct(cartProduct.getId());  // Set the correct field for product ID
+//                orderItem.setQty(cartProduct.getQty());     // Set the correct field for quantity
+//                formattedOrderItems.add(orderItem);
+//            }
             order.setOrderItems(orderItems);
-            if (imageUri !=null){
-                File imageFile = new File(getRealPathFromURI(imageUri));
 
-                // Create a RequestBody for the image file
-                RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
-
-                // Create a MultipartBody.Part with the desired name
-                MultipartBody.Part imagePart = MultipartBody.Part.createFormData("proof_of_payment_image", imageFile.getName(), requestBody);
-
-                Call<MakeOreder> call = RetrofitClient.getInstance().getServerDetail()
-                        .postMakeOrderWithImage(auth, order.getCity(), order.getCurrency(), order.getPaymentType(),
-                                order.getCustomerPhone(),order.getCustomerPhone2(), order.getAddress(),imagePart, order.getOrderItems());
-
-                call.enqueue(new Callback<MakeOreder>() {
-                    @Override
-                    public void onResponse(Call<MakeOreder> call, Response<MakeOreder> response) {
-                        if (response.isSuccessful()&& response.code() == 201) {
-                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
-                            alertDialogBuilder.setTitle("تم بنجاح");  // Set the title of the dialog
-                            alertDialogBuilder.setMessage("شكرا لتعاملك معنا سيتم التواصل معك في اقرب وقت");  // Set the message of the dialog
-
-                            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // Positive button clicked
-                                    dialog.dismiss();  // Dismiss the dialog if needed
-                                    getActivity().finish();
-                                }
-                            });
-                            AlertDialog alertDialog = alertDialogBuilder.create();
-                            alertDialog.show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<MakeOreder> call, Throwable t) {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
-                        alertDialogBuilder.setTitle("خطاء في الطلب");  // Set the title of the dialog
-                        alertDialogBuilder.setMessage("حدث خطاء غير متوقع يرجاء اعادة المحاولة");  // Set the message of the dialog
-
-                        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Positive button clicked
-                                dialog.dismiss();  // Dismiss the dialog if needed
-                            }
-                        });
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        alertDialog.show();
-                    }
-                });
-            }
-            else {
+//            if (imageUri !=null){
+//
+//                // Convert the List<CartProduct> to a JSON string
+//// Convert the List<CartProduct> to a JSON string
+//                Gson gson = new Gson();
+//                String orderItemsJson = gson.toJson(order.getOrderItems());
+//
+//// Create a RequestBody for the order items JSON
+//                RequestBody orderItemsRequestBody = RequestBody.create(MediaType.parse("application/json"), orderItemsJson);
+//
+//// Create a MultipartBody.Part for the image file
+//
+//
+//// Create other RequestBody instances for non-file data
+//// Create other RequestBody instances for non-file data
+//// Create other RequestBody instances for non-file data
+//                RequestBody cityRequestBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(order.getCity()));
+//                RequestBody currencyRequestBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(order.getCurrency()));
+//                RequestBody paymentTypeRequestBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(order.getPaymentType()));
+//                RequestBody customerPhoneRequestBody = RequestBody.create(MediaType.parse("text/plain"), order.getCustomerPhone());
+//                RequestBody addressRequestBody = RequestBody.create(MediaType.parse("text/plain"), order.getAddress());
+//                RequestBody customerPhone2RequestBody = RequestBody.create(MediaType.parse("text/plain"), order.getCustomerPhone2());
+//
+//// Make the API call
+//                Call<MakeOreder> call = RetrofitClient.getInstance().getServerDetail()
+//                        .postMakeOrderWithImage(auth, cityRequestBody, currencyRequestBody, paymentTypeRequestBody,
+//                                customerPhoneRequestBody, addressRequestBody, customerPhone2RequestBody, orderItemsRequestBody);
+//
+//                call.enqueue(new Callback<MakeOreder>() {
+//                    @Override
+//                    public void onResponse(Call<MakeOreder> call, Response<MakeOreder> response) {
+//                        if (response.code() == 400) {
+//                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
+//                            alertDialogBuilder.setTitle("Error");  // Set the title of the dialog
+//                            alertDialogBuilder.setMessage(response.errorBody().toString());  // Set the message of the dialog
+//
+//                            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // Positive button clicked
+//                                    dialog.dismiss();  // Dismiss the dialog if needed
+//                                    getActivity().finish();
+//                                }
+//                            });
+//                            AlertDialog alertDialog = alertDialogBuilder.create();
+//                            alertDialog.show();
+//
+//                        }
+//                        if (response.isSuccessful()&& response.code() == 201) {
+//                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
+//                            alertDialogBuilder.setTitle("تم بنجاح");  // Set the title of the dialog
+//                            alertDialogBuilder.setMessage("شكرا لتعاملك معنا سيتم التواصل معك في اقرب وقت");  // Set the message of the dialog
+//
+//                            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // Positive button clicked
+//                                    dialog.dismiss();  // Dismiss the dialog if needed
+////                                    getActivity().finish();
+//                                }
+//                            });
+//                            AlertDialog alertDialog = alertDialogBuilder.create();
+//                            alertDialog.show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<MakeOreder> call, Throwable t) {
+//                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
+//                        alertDialogBuilder.setTitle("خطاء في الطلب");  // Set the title of the dialog
+//                        alertDialogBuilder.setMessage(t.getMessage()+"حدث خطاء غير متوقع يرجاء اعادة المحاولة");  // Set the message of the dialog
+//                        Log.i("Error on send Make order", t.getMessage());
+//
+//                        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                // Positive button clicked
+//                                dialog.dismiss();  // Dismiss the dialog if needed
+//                            }
+//                        });
+//                        AlertDialog alertDialog = alertDialogBuilder.create();
+//                        alertDialog.show();
+//                    }
+//                });
+//            }
+//            else {
             Call<MakeOreder> call = RetrofitClient.getInstance().getServerDetail().postMakeOrder(auth, order);
             call.enqueue(new Callback<MakeOreder>() {
                 @Override
@@ -286,6 +343,9 @@ public class PaymentFragment extends Fragment {
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(requireContext());
 
                     if (response.isSuccessful()&& response.code() == 201) {
+                        if (imageUri != null) {
+                            sendOrderProfit(response.body().getId());
+                        }
                         alertDialogBuilder.setTitle("تم بنجاح");  // Set the title of the dialog
                         alertDialogBuilder.setMessage("شكرا لتعاملك معنا سيتم التواصل معك في اقرب وقت");  // Set the message of the dialog
                     }
@@ -323,6 +383,31 @@ public class PaymentFragment extends Fragment {
                     alertDialog.show();
                 }
             });
+//            }
+        }
+private boolean success;
+        public boolean sendOrderProfit(int orderId){
+            String auth ="token 4ff24a3114344bc978419193eacdbca8316a82c8";
+            File imageFile = new File(getRealPathFromURI(imageUri));
+            MultipartBody.Part imagePart = MultipartBody.Part.createFormData(
+                    "proof_of_payment_image",
+                    imageFile.getName(),
+                    RequestBody.create(MediaType.parse("image/jpeg"), imageFile)
+            );
+            Call<MakeOreder> call= RetrofitClient.getInstance().getServerDetail().updateOrderImage(auth,orderId,imagePart);
+
+             success =false;
+            call.enqueue(new Callback<MakeOreder>() {
+                @Override
+                public void onResponse(Call<MakeOreder> call, Response<MakeOreder> response) {
+                    if (response.code() == 200)
+                        success = true;
                 }
+                @Override
+                public void onFailure(Call<MakeOreder> call, Throwable t) {
+                    success = false;
+                }
+            });
+            return success;
         }
     }

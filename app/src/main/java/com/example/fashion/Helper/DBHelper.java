@@ -42,7 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
         byteImage = byteArrayOutputStream.toByteArray();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", modelClass.getName());
-        contentValues.put("price", modelClass.getPrice());
+        contentValues.put("email", modelClass.getPrice());
         contentValues.put("image", byteImage);
         long checkQuery = database.insert("LoginUser", null, contentValues);
         if (checkQuery != -1){
