@@ -7,6 +7,7 @@ import com.example.fashion.Domain.CreateReview;
 import com.example.fashion.Domain.Favorite;
 import com.example.fashion.Domain.MakeOreder;
 import com.example.fashion.Domain.NotificationDomain;
+import com.example.fashion.Domain.OrderDetail;
 import com.example.fashion.Domain.PaymentDetail;
 import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Domain.ProductResult;
@@ -37,6 +38,8 @@ public  interface ServerDetail {
     @GET("/api/products/")
     Call <ProductResult> getProduct();
     @GET("/api/products/")
+    Call <ProductResult> getProduct(@Query("category") int category);
+    @GET("/api/products/")
     Call <ProductResult> getProduct(@Header("Authorization") String authorization);
     @GET("/api/categorys/")
     Call <List<Category>> getCategory();
@@ -62,6 +65,9 @@ public  interface ServerDetail {
     Call<List<Favorite>> getUserFavorite(@Header("Authorization") String authorization);
     @GET("/api/orders/payment-detail/")
     Call<PaymentDetail> getPaymentDetail(@Header("Authorization") String authorization);
+
+    @GET("/api/orders/")
+    Call<List<OrderDetail>> getOrdersList(@Header("Authorization") String authorization);
 
 
 //   ---------------- Post Methods ----------------

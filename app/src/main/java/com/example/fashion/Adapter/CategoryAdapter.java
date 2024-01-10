@@ -22,7 +22,6 @@ import com.example.fashion.R;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewholder>{
-
     public CategoryAdapter(List<Category> items) {
         this.items = items;
     }
@@ -57,15 +56,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewho
             @Override
             public void onClick(View view) {
                 Intent intent;
-//                if (listener != null) {
-//                    listener.onCategoryClick(items.get(position2).getId());
-//                }
             if (items.get(position2).getHave_children()){
                 intent = new Intent(context, CategoryActivity.class);
                 intent.putExtra("have_children",items.get(position2).getHave_children());
-//                if (category == 0)
-//                intent.putExtra("category",category);
-//                else
                     intent.putExtra("category",items.get(position2).getId());
             }
             else {
@@ -73,7 +66,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewho
                 intent.putExtra("category",items.get(position2).getId());
             }
             context.startActivity(intent);
-
             }
         });
     }
@@ -91,7 +83,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Viewho
             titleTxt = (TextView) itemView.findViewById(R.id.titleTxt);
             image = (ImageView) itemView.findViewById(R.id.image);
             constraintContainer = itemView.findViewById(R.id.constraintContainer);
-
         }
     }
 

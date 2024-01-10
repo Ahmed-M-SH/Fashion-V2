@@ -5,15 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.OrderListFragment"
     >
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="order" />
-
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orderRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/viewholder_order_list"/>
+        tools:listitem="@layout/viewholder_order_list"
+        android:isScrollContainer="true"/>
 </FrameLayout>
