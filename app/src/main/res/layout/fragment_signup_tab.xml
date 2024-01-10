@@ -26,61 +26,61 @@
                 android:src="@drawable/signimg" />
 
             <EditText
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-
+                android:id="@+id/signup_email"
                 android:layout_width="300dp"
+
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:id="@+id/signup_email"
                 android:layout_marginTop="30dp"
-                android:padding="8dp"
-                android:hint="Email"
+                android:background="@drawable/edittext_bkg"
                 android:drawableLeft="@drawable/baseline_email_24"
                 android:drawablePadding="8dp"
-                android:background="@drawable/edittext_bkg"/>
+                android:hint="الايميل"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
 
             <EditText
+                android:id="@+id/signup_password"
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:id="@+id/signup_password"
                 android:layout_marginTop="20dp"
-                android:padding="8dp"
-                android:hint="Password"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-
-                android:inputType="textPassword"
+                android:background="@drawable/edittext_bkg"
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="8dp"
-                android:background="@drawable/edittext_bkg"/>
+                android:hint="كلمة المرور"
+
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
 
             <EditText
+                android:id="@+id/signup_confirm"
                 android:layout_width="300dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:id="@+id/signup_confirm"
                 android:layout_marginTop="20dp"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-
-                android:hint="Confirm Password"
-                android:inputType="textPassword"
+                android:background="@drawable/edittext_bkg"
                 android:drawableLeft="@drawable/baseline_password_24"
                 android:drawablePadding="8dp"
-                android:background="@drawable/edittext_bkg"/>
+
+                android:hint="تأكيد كلمة المرور"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
 
             <Button
+                android:id="@+id/signup_button"
                 android:layout_width="300dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:id="@+id/signup_button"
+                android:text="حساب جديد"
                 android:textSize="18sp"
-                android:text="Signup"
-                app:cornerRadius = "30dp"/>
+                app:cornerRadius="30dp" />
 
         </LinearLayout>
 

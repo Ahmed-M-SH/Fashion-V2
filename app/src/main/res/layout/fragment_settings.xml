@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Edit Profile"
+                android:text="تعديل الصفحة الشخصية"
                 android:textColor="@color/lavender"
                 android:textSize="30sp" />
 
@@ -49,7 +49,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/lavender_border"
                 android:gravity="start|center_vertical"
-                android:hint="Enter name"
+                android:hint="ادخل الاسم"
                 android:padding="16dp"
                 android:textColor="@color/lavender" />
 
@@ -60,7 +60,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/lavender_border"
                 android:gravity="start|center_vertical"
-                android:hint="Enter email"
+                android:hint="ادخل الايميل"
                 android:padding="16dp"
                 android:textColor="@color/lavender" />
 
@@ -70,7 +70,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/lavender"
-                android:text="Save"
+                android:text="حفظ"
                 android:textSize="18sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

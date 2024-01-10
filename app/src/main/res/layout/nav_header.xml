@@ -22,19 +22,21 @@
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/roundedImageViewRounded"/>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/navName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="الاسم"
         android:textColor="@color/white"
-        android:text="Name"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/navEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:layout_marginBottom="16dp"
-        android:textSize="14sp"
-        android:text="email" />
+        android:text="الايميل"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 </LinearLayout>
