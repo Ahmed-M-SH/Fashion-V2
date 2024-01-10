@@ -3,6 +3,7 @@ package com.example.fashion.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import com.like.OnLikeListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -111,6 +113,17 @@ public class DetailsFragment extends Fragment {
                 Log.i("onFailure", "Error: " + t.getMessage());
             }
         });
+//        MaterialRatingBar ratingBar = findViewById(R.id.ratingBar);
+//        ratingBar.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    // اقتران العمل المطلوب عند اللمس على الـ MaterialRatingBar
+//                    // قد ترغب في تغيير حالة الـ MaterialRatingBar هنا أو اتخاذ إجراء ما.
+//                }
+//                return false;
+//            }
+//        });
     }
 
 
