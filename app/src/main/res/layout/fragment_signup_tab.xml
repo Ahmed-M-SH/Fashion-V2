@@ -72,7 +72,6 @@
                 android:drawableLeft="@drawable/baseline_email_24"
                 android:drawablePadding="8dp"
                 android:background="@drawable/edittext_bkg"/>
-
             <EditText
                 android:layout_width="300dp"
                 android:layout_height="60dp"

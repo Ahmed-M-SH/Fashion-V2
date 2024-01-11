@@ -37,7 +37,7 @@ public  class UserManagement {
                     tinyDB.putObject("profile", user.get(0));
                 }
 //                else
-                    Toast.makeText(context,"Error Code:"+response.code(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context,"Error Code:"+response.code(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -10,6 +10,7 @@ import com.example.fashion.Domain.NotificationDomain;
 import com.example.fashion.Domain.OrderDetail;
 import com.example.fashion.Domain.PaymentDetail;
 import com.example.fashion.Domain.ProductDetail;
+import com.example.fashion.Domain.ProductRate;
 import com.example.fashion.Domain.ProductResult;
 import com.example.fashion.Domain.Promotion;
 import com.example.fashion.Domain.UserAuthentication;
@@ -89,6 +90,8 @@ public  interface ServerDetail {
     Call <Favorite> postFavoriteDelete(@Header("Authorization") String authorization,@Path("product_id") int productId);
     @POST("/api/products/review/create/")
     Call <Favorite> postReview(@Header("Authorization") String authorization, @Body CreateReview review);
+    @POST("/api/products/rating/")
+    Call <ProductRate> postRating(@Header("Authorization") String authorization, @Body ProductRate review);
     @POST("/api/favorite/create/")
     Call<Favorite> postFavoriteAdd(@Header("Authorization") String authorization,@Body CartProduct product);
 

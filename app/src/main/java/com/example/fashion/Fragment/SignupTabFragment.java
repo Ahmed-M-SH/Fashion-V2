@@ -152,7 +152,6 @@ public class SignupTabFragment extends Fragment {
                             tinyDB.putObject("userAuth",userProfile.getUserAuth());
 
                             UserManagement.sendRequestProfile(userProfile.getUserAuth(),requireContext());
-
                             Intent intent = new Intent(requireContext(), MainActivity.class);
                             startActivity(intent);
                             getActivity().finish();
