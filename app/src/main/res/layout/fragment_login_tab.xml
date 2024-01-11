@@ -34,6 +34,7 @@
                 android:layout_marginTop="30dp"
                 android:padding="8dp"
                 android:hint="Email"
+                android:inputType="textEmailAddress"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:drawableLeft="@drawable/baseline_email_24"

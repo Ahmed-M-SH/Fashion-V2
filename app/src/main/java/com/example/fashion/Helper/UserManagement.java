@@ -24,7 +24,8 @@ public  class UserManagement {
         this.context =context;
         tinyDB = new TinyDB(context);
     }
-    public static void sendRequestProfile(UserAuthentication authentication) {
+    public static void sendRequestProfile(UserAuthentication authentication,Context context) {
+        tinyDB = new TinyDB(context);
         UserAuthentication auth = tinyDB.getObject("userAuth", UserAuthentication.class);
         Call<List<UserProfile>> callProfile = RetrofitClient.getInstance().getServerDetail().getUserProfile(authentication.getToken());
         callProfile.enqueue(new Callback<List<UserProfile>>() {
@@ -37,6 +38,30 @@ public  class UserManagement {
                 }
 //                else
                     Toast.makeText(context,"Error Code:"+response.code(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<UserProfile>> call, Throwable t) {
+                Toast.makeText(context,"Error sending request To Get Profile and error code:"+t.getMessage(), Toast.LENGTH_LONG).show();
+
+            }
+
+        });
+
+    }
+    public static void sendRequestProfile(UserAuthentication authentication) {
+        UserAuthentication auth = tinyDB.getObject("userAuth", UserAuthentication.class);
+        Call<List<UserProfile>> callProfile = RetrofitClient.getInstance().getServerDetail().getUserProfile(authentication.getToken());
+        callProfile.enqueue(new Callback<List<UserProfile>>() {
+            @Override
+            public void onResponse(Call<List<UserProfile>> call, Response<List<UserProfile>> response) {
+                List<UserProfile> user = response.body();
+
+                if (response.isSuccessful()) {
+                    tinyDB.putObject("profile", user.get(0));
+                }
+//                else
+                Toast.makeText(context,"Error Code:"+response.code(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
