@@ -255,13 +255,14 @@ mmmmmm"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="10dp"
                     />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/addToCartBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="0dp"
                     android:background="@color/red"
-                    android:text="Buy Now"
+                    android:text="اضف الى السلة"
                     android:textColor="@color/white"
                     android:textSize="20dp" />
             </LinearLayout>

@@ -23,7 +23,9 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="قائمة الاصناف"
-        android:textSize="30dp"
+        android:textSize="20dp"
+        android:textColor="@color/lavender"
+        android:background="@drawable/lavender_border"
         app:layout_constraintBottom_toTopOf="@+id/fragment_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -40,5 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22"></FrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/textView22">
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
