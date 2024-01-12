@@ -33,6 +33,7 @@ import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
 import com.example.fashion.Activity.LoginActivity;
 import com.example.fashion.Activity.PaymentActivity;
 import com.example.fashion.Activity.UploadActivity;
+import com.example.fashion.Domain.UpdateUserProfile;
 import com.example.fashion.Domain.UserAuthentication;
 import com.example.fashion.Domain.UserProfile;
 import com.example.fashion.Helper.DBHelper;
@@ -123,33 +124,36 @@ public class SettingsFragment extends Fragment {
         });
     }
     private void sendUpdateProfileRequest(){
-//        boolean isUpdated = false;
-//        if (!uploadPhone.toString().equals(userProfile.getPhoneNumber())){
-//            userProfile.setPhoneNumber(uploadPhone.toString());
-//            isUpdated = true;
-//        }
-//        if (uploadName.toString().equals(userProfile.getName()))
-//        {
-//            userProfile.setName(uploadName.toString());
-//            isUpdated = true;
-//        }
-//        if (uploadEmail.toString().equals(userProfile.getEmail()))
-//        {
-//            userProfile.setEmail(uploadEmail.toString());
-//            isUpdated = true;
-//        }
-//        if (imageUri != null){
-//            sendProfileImage();
-//            if (!isUpdated)
-//                return;
-//            if (isUpdated) {
-                Call<UserProfile> call = RetrofitClient.getInstance().getServerDetail().updateProfileUser(auth.getToken(), userProfile);
+        boolean isUpdated = false;
+        UpdateUserProfile updateUserProfile = new UpdateUserProfile();
+        if (!uploadPhone.getText().toString().equals(userProfile.getPhoneNumber())) {
+            userProfile.setPhoneNumber(uploadPhone.getText().toString());
+            updateUserProfile.setPhoneNumber(uploadPhone.getText().toString());
+            isUpdated = true;
+        }
+
+        if (!uploadName.getText().toString().equals(userProfile.getName())) {
+            userProfile.setName(uploadName.getText().toString());
+            updateUserProfile.setName(uploadName.getText().toString());
+            isUpdated = true;
+        }
+
+        if (!uploadEmail.getText().toString().equals(userProfile.getEmail())) {
+            userProfile.setEmail(uploadEmail.getText().toString());
+            updateUserProfile.setEmail(uploadEmail.getText().toString());
+            isUpdated = true;
+        }
+        if (imageUri != null){
+            sendProfileImage();
+            if (!isUpdated)
+                return;
+            if (isUpdated) {
+                Call<UserProfile> call = RetrofitClient.getInstance().getServerDetail().updateProfileUser(auth.getToken(), updateUserProfile);
                 call.enqueue(new Callback<UserProfile>() {
                     @Override
                     public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
                         Toast.makeText(requireContext(),"Updated successfully",Toast.LENGTH_LONG).show();
                     }
-
                     @Override
                     public void onFailure(Call<UserProfile> call, Throwable t) {
 
@@ -157,8 +161,8 @@ public class SettingsFragment extends Fragment {
                 });
             }
 
-//        }
-//    }
+        }
+    }
     private void sendProfileImage(){
 
 

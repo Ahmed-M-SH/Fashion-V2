@@ -14,6 +14,7 @@ import com.example.fashion.Domain.ProductRate;
 import com.example.fashion.Domain.ProductResult;
 import com.example.fashion.Domain.Promotion;
 import com.example.fashion.Domain.ReviewLikes;
+import com.example.fashion.Domain.UpdateUserProfile;
 import com.example.fashion.Domain.UserAuthentication;
 import com.example.fashion.Domain.UserProfile;
 
@@ -145,7 +146,7 @@ public  interface ServerDetail {
     @PATCH("/api/user/profile/update/")
     Call<UserProfile> updateProfileUser(
             @Header("Authorization") String authorization,
-            @Body UserProfile profile
+            @Body UpdateUserProfile profile
     );
 
 }
