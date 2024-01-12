@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fashion.Adapter.CategoryAdapter;
@@ -31,6 +32,7 @@ public class CategorieFragment extends Fragment  {
     private RecyclerView categoryRecyclerView;
 
     private int category;
+    private ProgressBar progressBar7;
 
 //    public CategorieFragment(int category) {
 //        this.category = category;
@@ -43,12 +45,15 @@ public class CategorieFragment extends Fragment  {
         View view = inflater.inflate(R.layout.fragment_categorie, container, false);
 
         initView(view); // Initialize views here
+        progressBar7.setVisibility(View.VISIBLE);
         sendCategoryRequest();
+        progressBar7.setVisibility(View.GONE);
         return view;
     }
 
     private void initView(View view) {
         categoryRecyclerView = view.findViewById(R.id.categoriRecle);
+        progressBar7 = view.findViewById(R.id.progressBar7);
         category= getActivity().getIntent().getIntExtra("category", 0);
     }
     private void sendCategoryRequest() {

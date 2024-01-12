@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,7 @@ public class DetailsFragment extends Fragment {
     private float rating_no,rating_no_cahinge;
     private TinyDB tinyDB;
     private ProductDetail productDetail;
+    private ProgressBar progressBar3;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +76,9 @@ public class DetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         initView(view); // Initialize views here
+        progressBar3.setVisibility(View.VISIBLE);
         sendRequest();
+        progressBar3.setVisibility(View.GONE);
 //        sendRequest();
         return view;
     }
@@ -180,6 +184,7 @@ public class DetailsFragment extends Fragment {
          auth = tinyDB.getObject("userAuth", UserAuthentication.class);
         cartProduct = new CartProduct();
         cartProduct.setProduct(productId);
+        progressBar3 = view.findViewById(R.id.progressBar3);
 
         if (isAuthent) {
 

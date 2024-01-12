@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -73,6 +74,7 @@ public class PaymentFragment extends Fragment {
     private TinyDB tinyDB;
     private UserAuthentication userAuth;
     private boolean isAuthent;
+    private ProgressBar progressBar5;
 
     @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,16 +82,14 @@ public class PaymentFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_payment, container, false);
 
             initView(view);
+            progressBar5.setVisibility(View.VISIBLE);
             sendPaymentDetailsRequest();
-
-            // Load the image using a library like Picasso or Glide
-            Glide.with(this).load(imageUrl).into(imageView);
-
+            progressBar5.setVisibility(View.GONE);
             return view;
         }
 
         public void initView(View view) {
-
+            progressBar5 = view.findViewById(R.id.progressBar5);
             phone_number1 = view.findViewById(R.id.phone_number1);
             phone_number2 = view.findViewById(R.id.phone_number2);
             address_payment = view.findViewById(R.id.address_payment);
@@ -131,7 +131,11 @@ public class PaymentFragment extends Fragment {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
-                    // Do nothing if nothing is selected
+                    City selectedCity = (City) parentView.getItemAtPosition(0);
+
+                    // Access the properties of the selected City
+                    cityId = selectedCity.getId();
+
                 }
             });
 
@@ -152,6 +156,10 @@ public class PaymentFragment extends Fragment {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parentView) {
+                    Currency selectedCurrency = (Currency) parentView.getItemAtPosition(0);
+
+                    // Access the properties of the selected Currency
+                    currencyId = selectedCurrency.getId();
                 }
             });
         }
@@ -226,6 +234,7 @@ public class PaymentFragment extends Fragment {
         }
 
         public void makeOrderPayment(){
+        progressBar5.setVisibility(View.VISIBLE);
         RadioButton payButton = view.findViewById(payment_group.getCheckedRadioButtonId());
         payment_id = (int) payButton.getTag();
             if (isAuthent) {
@@ -373,6 +382,7 @@ public class PaymentFragment extends Fragment {
                         }
                     });
                     AlertDialog alertDialog = alertDialogBuilder.create();
+                    progressBar5.setVisibility(View.GONE);
                     alertDialog.show();
 
                 }
@@ -390,6 +400,7 @@ public class PaymentFragment extends Fragment {
                         }
                     });
                     AlertDialog alertDialog = alertDialogBuilder.create();
+                    progressBar5.setVisibility(View.GONE);
                     alertDialog.show();
                 }
             });
@@ -403,7 +414,7 @@ private boolean success;
                 MultipartBody.Part imagePart = MultipartBody.Part.createFormData(
                         "proof_of_payment_image",
                         imageFile.getName(),
-                        RequestBody.create(MediaType.parse("image/jpeg"), imageFile)
+                        RequestBody.create(MediaType.parse("image/*"), imageFile)
                 );
                 Call<MakeOreder> call = RetrofitClient.getInstance().getServerDetail().updateOrderImage(userAuth.getToken(), orderId, imagePart);
 

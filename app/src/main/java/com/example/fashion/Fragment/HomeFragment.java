@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,7 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
     private RecyclerView productrecyclerView,categoryRecyclerView;
     RecyclerView.Adapter productAdapter,categoryAdapter;
+    private ProgressBar progressBar;
     AppCompatButton notification_status;
     private ImageView notificationImg;
     private TinyDB tinyDB;
@@ -67,9 +69,11 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initView(view); // Initialize views here
+        progressBar.setVisibility(View.VISIBLE);
         sendPromotionRequest();
         sendCategoryRequest();
         sendProductRequest();
+        progressBar.setVisibility(View.GONE);
         return view;
     }
 
@@ -82,6 +86,21 @@ public class HomeFragment extends Fragment {
                 if (promotion != null) {
                     promotionAdapter = new PromotionAdapter(promotion);
                     viewPager.setAdapter(promotionAdapter);
+                        handler = new Handler();
+                        runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                if (viewPager.getCurrentItem() == viewPager.getAdapter().getItemCount() - 1) {
+                                    viewPager.setCurrentItem(0);
+                                } else {
+                                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                                }
+                                handler.postDelayed(this, delayTime);
+                            }
+                        };
+
+                        handler.postDelayed(runnable, delayTime);
+
                 } else {
                 }
             }
@@ -137,20 +156,6 @@ public class HomeFragment extends Fragment {
             notification_status.setVisibility(View.VISIBLE);
             notification_status.setText("" + notificationCounts.size());
         }
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (viewPager.getCurrentItem() == viewPager.getAdapter().getItemCount() - 1) {
-                    viewPager.setCurrentItem(0);
-                } else {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-                }
-                handler.postDelayed(this, delayTime);
-            }
-        };
-
-        handler.postDelayed(runnable, delayTime);
 
     }
 
@@ -205,6 +210,7 @@ public class HomeFragment extends Fragment {
         notification_status = view.findViewById(R.id.noitficatin_stetes);
         tinyDB = new TinyDB(getActivity().getApplicationContext());
         viewPager = view.findViewById(R.id.view_pager);
+        progressBar = view.findViewById(R.id.progressBar);
         notificationImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,6 +220,7 @@ public class HomeFragment extends Fragment {
         });
 
         viewPager = view.findViewById(R.id.view_pager);
+
 
     }
 

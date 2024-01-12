@@ -29,14 +29,18 @@ import com.example.fashion.Fragment.AboutFragment;
 import com.example.fashion.Fragment.OrderListFragment;
 import com.example.fashion.Helper.DBHelper;
 import com.example.fashion.Fragment.HomeFragment;
+import com.example.fashion.Helper.TinyDB;
 import com.example.fashion.R;
 import com.example.fashion.Fragment.SettingsFragment;
+import com.example.fashion.Services.FashionApplication;
 import com.example.fashion.Services.NotificationCheckService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
+    private boolean isAuthent;
+    private TinyDB tinyDB;
 //    private FloatingActionButton fab;
 
 //    private static final long DELAY_MILLIS = 30 * 1000; // 1 minute
@@ -55,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        tinyDB = new TinyDB(this);
+        isAuthent = tinyDB.getBoolean("isAuthent");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
 
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
@@ -130,8 +136,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.bottom_home:
-//                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-//                    finish();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new HomeFragment()).commit();
                     return true;
                 case R.id.bottom_search:
                     startActivity(new Intent(getApplicationContext(), SearchActivity.class));
@@ -165,25 +171,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new HomeFragment()).commit();
                 break;
             case R.id.nav_settings:
+                if (isAuthent){
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SettingsFragment()).commit();
-                startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
+//                startActivity(new Intent(getApplicationContext(),SettingsActivity.class));
                 break;
+                }else{
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
+                }
             case R.id.nav_share:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
 //                        new ShareFragment()).commit();
 
-                  String APP_LINK = "https://your-app-link.com";
+                String APP_LINK = "https://your-app-link.com";
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out this app!");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, APP_LINK);
                 startActivity(Intent.createChooser(shareIntent, "Share via"));
-
 
                 break;
             case R.id.nav_about:

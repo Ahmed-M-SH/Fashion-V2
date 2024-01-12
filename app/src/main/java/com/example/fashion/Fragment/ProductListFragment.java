@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fashion.Adapter.HomeProductAdapter;
@@ -25,6 +26,7 @@ public class ProductListFragment extends Fragment {
     private HomeProductAdapter productAdapter;
     private RecyclerView productrecyclerView;
     private int categoryId;
+    private ProgressBar progressBar9;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,9 @@ public class ProductListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
         initView(view); // Initialize views here
+        progressBar9.setVisibility(View.VISIBLE);
         sendRequest();
+        progressBar9.setVisibility(View.GONE);
         return view;
     }
     private void sendRequest() {
@@ -63,6 +67,7 @@ public class ProductListFragment extends Fragment {
     }
     private void initView(View view) {
         productrecyclerView = view.findViewById(R.id.productRecyclerView);
+        progressBar9 = view.findViewById(R.id.progressBar9);
         categoryId = getActivity().getIntent().getIntExtra("category", 0);
     }
 }

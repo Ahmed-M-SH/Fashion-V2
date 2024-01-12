@@ -18,6 +18,7 @@ import com.example.fashion.Fragment.NotificationFragment;
 import com.example.fashion.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -37,39 +38,56 @@ import retrofit2.Response;
          this.tinyDB = new TinyDB(context);
          this.isAuthent= tinyDB.getBoolean("isAuthent");
      }
-     public List<NotificationDomain> getUnreadNotifications(){
-        if (isAuthent) {
+     public List<NotificationDomain> getUnreadNotifications() {
+         if (isAuthent) {
              userAuth = tinyDB.getObject("userAuth", UserAuthentication.class);
-         final List<NotificationDomain>[] notificationsResult = new List[]{new ArrayList()};
-         Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().getUnreadNotifications(userAuth.getToken());
-         call.enqueue(new Callback<List<NotificationDomain>>() {
-             @Override
-             public void onResponse(Call<List<NotificationDomain>> call, Response<List<NotificationDomain>> response) {
-                 List<NotificationDomain> notifications = response.body();
 
-                 notificationsResult[0] = notifications;
-                 tinyDB.putListObjectNotification("unReadNotifications", notifications);
-                 if (notifications.size() == 0) {
-                     Log.i("Notification", "Notification Service is empty");
+             List<NotificationDomain> unreadNotifications = tinyDB.getListObjectNotification("unReadNotifications");
+             Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().getUnreadNotifications(userAuth.getToken());
+             call.enqueue(new Callback<List<NotificationDomain>>() {
+                 @Override
+                 public void onResponse(Call<List<NotificationDomain>> call, Response<List<NotificationDomain>> response) {
+                     List<NotificationDomain> notifications = response.body();
+
+                     if (notifications != null) {
+                         if (notifications.size() == 0) {
+                             Log.i("Notification", "Notification Service is empty");
+                         } else {
+                             for (NotificationDomain notification : notifications) {
+                                 boolean notificationExists = false;
+
+                                 for (NotificationDomain unreadNotification : unreadNotifications) {
+                                     if (notification.getId() == unreadNotification.getId()) {
+                                         notificationExists = true;
+                                         break;
+                                     }
+                                 }
+
+                                 if (!notificationExists) {
+//                                     makeNotifications(Collections.singletonList(notification));
+                                     unreadNotifications.add(notification);
+                                 }
+                             }
+
+                             tinyDB.putListObjectNotification("unReadNotifications", unreadNotifications);
+                             tinyDB.putListObjectNotification("notifications", notifications);
+                         }
+                     }
                  }
-                 else {
-                     makeNotifications(notifications);
-                     tinyDB.putObject("notifications", notifications);
+
+                 @Override
+                 public void onFailure(Call<List<NotificationDomain>> call, Throwable t) {
+                     // Handle failure
                  }
-             }
+             });
 
-             @Override
-             public void onFailure(Call<List<NotificationDomain>> call, Throwable t) {
-
-             }
-         });
-         return notificationsResult[0];
-        }
-         else {
-            List<NotificationDomain> emptyDomain = new ArrayList<NotificationDomain>();
+             return unreadNotifications;
+         } else {
+             List<NotificationDomain> emptyDomain = new ArrayList<>();
              return emptyDomain;
-        }
-    }
+         }
+     }
+
      public List<NotificationDomain> getAllNotifications(){
          if (isAuthent) {
              userAuth = tinyDB.getObject("userAuth", UserAuthentication.class);
@@ -127,7 +145,7 @@ import retrofit2.Response;
                  }
              }
              int notificationId = generateUniqueId();
-             notificationManager.notify(notificationId, builder.build());
+             notificationManager.notify(7755, builder.build());
          }
      }
      private int generateUniqueId() {

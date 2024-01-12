@@ -1,6 +1,7 @@
 
 package com.example.fashion.Domain;
 
+import com.example.fashion.Helper.ServerDetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -26,7 +27,7 @@ public class UserProfile {
     private String registerData;
     @SerializedName("image")
     @Expose
-    private Object image;
+    private String image;
     @SerializedName("previous_ordersast")
     @Expose
     private Integer previousOrdersast;
@@ -105,13 +106,16 @@ public class UserProfile {
         this.registerData = registerData;
     }
 
-    public Object getImage() {
+    public String getImage() {
+        if (image != null && !image.startsWith("http")) {
+            return ServerDetail.endpoint + image;
+        }
         return image;
     }
 
-    public void setImage(Object image) {
-        this.image = image;
-    }
+//    public void setImage(Object image) {
+//        this.image = image;
+//    }
 
     public Integer getPreviousOrdersast() {
         return previousOrdersast;

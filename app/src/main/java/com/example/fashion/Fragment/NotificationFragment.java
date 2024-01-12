@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ public class NotificationFragment extends Fragment {
     private RecyclerView notificationsRecyclerView;
     private TinyDB tinyDB;
     private ManagmentNotifications managmentNotifications;
+    private ProgressBar progressBar4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +42,8 @@ public class NotificationFragment extends Fragment {
         notificationsRecyclerView = view.findViewById(R.id.listview);
 
         tinyDB = new TinyDB(getActivity().getApplicationContext());
+        progressBar4 = view.findViewById(R.id.progressBar4);
+        progressBar4.setVisibility(View.VISIBLE);
         List<NotificationDomain> notifications = tinyDB.getListObjectNotification("Notifications");
         ManagmentNotifications managmentNotifications = new ManagmentNotifications(getActivity().getApplicationContext());
 //        List<NotificationDomain> notifications = managmentNotifications.getUnreadNotifications();
@@ -47,5 +51,6 @@ public class NotificationFragment extends Fragment {
         Toast.makeText(getActivity().getApplicationContext(),"Notifications Count is :"+notifications.size(), Toast.LENGTH_SHORT).show();
         notificationsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.VERTICAL,false));
         notificationsRecyclerView.setAdapter(adapter);
+        progressBar4.setVisibility(View.GONE);
     }
 }

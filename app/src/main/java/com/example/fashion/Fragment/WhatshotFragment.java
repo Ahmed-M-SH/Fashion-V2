@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,13 +31,16 @@ public class WhatshotFragment extends Fragment {
     private TinyDB tinyDB;
     private UserAuthentication userAuth;
     private boolean isAuthent;
+    private ProgressBar progressBar6;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_whatshot, container, false);
         initView(view); // Initialize views here
+        progressBar6.setVisibility(View.VISIBLE);
         sendRequest();
+        progressBar6.setVisibility(View.GONE);
         return view;
     }
 
@@ -85,7 +89,7 @@ public void updateData(){
     }
 
     private void initView(View view) {
-
+        progressBar6 = view.findViewById(R.id.progressBar6);
         recyclerView = view.findViewById(R.id.listview);
         tinyDB = new TinyDB(requireContext());
         isAuthent = tinyDB.getBoolean("isAuthent");

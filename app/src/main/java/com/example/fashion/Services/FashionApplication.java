@@ -16,7 +16,7 @@ import com.example.fashion.Helper.TinyDB;
 public class FashionApplication extends Application {
 
     private static boolean isAuthent;
-    private static final long DELAY_MILLIS = 60 * 1000; // 1 minute
+    private static final long DELAY_MILLIS = 60 * 100; // 1 minute
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable periodicServiceStarter = new Runnable() {
@@ -51,7 +51,7 @@ public class FashionApplication extends Application {
 //            // For devices with API level lower than 26
 //            startService(new Intent(this, NotificationForegroundService.class));
 //        }
-        startForegroundServiceWithDelay();
+//        startForegroundServiceWithDelay();
         TinyDB tinyDB = new TinyDB(this);
         FashionApplication.setIsAuthent(tinyDB.getBoolean("isAuthent"));
 

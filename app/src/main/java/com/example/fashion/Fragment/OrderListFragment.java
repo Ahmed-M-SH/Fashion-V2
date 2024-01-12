@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.fashion.Adapter.OrderDetailAdapter;
 import com.example.fashion.Domain.OrderDetail;
@@ -30,12 +31,15 @@ public class OrderListFragment extends Fragment {
     private TinyDB tinyDB;
     private UserAuthentication userAuth;
     private boolean isAuthent;
+    private ProgressBar progressBar10;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_list, container, false);
         initView(view);
+        progressBar10.setVisibility(View.VISIBLE);
         sendRequest();
+        progressBar10.setVisibility(View.GONE);
         return view;
     }
 
@@ -63,6 +67,7 @@ public class OrderListFragment extends Fragment {
     private void initView(View view) {
         orderRecyclerView = view.findViewById(R.id.orderRecyclerView);
         tinyDB = new TinyDB(requireContext());
+        progressBar10 = view.findViewById(R.id.progressBar10);
         isAuthent = tinyDB.getBoolean("isAuthent");
     }
 }

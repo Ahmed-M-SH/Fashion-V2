@@ -40,10 +40,11 @@ public class UploadActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        uploadEmail = findViewById(R.id.uploadEmail);
-        uploadImage = findViewById(R.id.uploadImage);
-        uploadName = findViewById(R.id.uploadName);
-        saveButton = findViewById(R.id.saveButton);
+
+//        uploadEmail = findViewById(R.id.uploadEmail);
+//        uploadImage = findViewById(R.id.uploadImage);
+//        uploadName = findViewById(R.id.uploadName);
+//        saveButton = findViewById(R.id.saveButton);
         dbHelper = new DBHelper(this);
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

@@ -16,6 +16,7 @@ import com.example.fashion.Activity.NotificationActivity;
 import com.example.fashion.Domain.NotificationDomain;
 import com.example.fashion.Fragment.NotificationFragment;
 import com.example.fashion.Helper.ManagmentNotifications;
+import com.example.fashion.Helper.TinyDB;
 import com.example.fashion.R;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 public class NotificationForegroundService extends Service {
 
     private static final int NOTIFICATION_ID = 1;
+    private static TinyDB tinyDB;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -41,10 +43,13 @@ public class NotificationForegroundService extends Service {
 
         public NotificationTask(Context context) {
             this.context = context.getApplicationContext();
+
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
+            tinyDB = new TinyDB(context);
+
             ManagmentNotifications mNotifications = new ManagmentNotifications(context);
             List<NotificationDomain> notifications = mNotifications.getUnreadNotifications();
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -53,30 +58,36 @@ public class NotificationForegroundService extends Service {
 
             if (hasNewNotifications) {
                 for (NotificationDomain notification : notifications) {
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Fashion_Id_channel")
-                            .setSmallIcon(R.drawable.baseline_notifications_none_24)
-                            .setContentTitle(notification.getTitle())
-                            .setContentText(notification.getText())
-                            .setAutoCancel(true);
+                    // Check if the notification is new
+                    if (isNewNotification(notification)) {
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Fashion_Id_channel")
+                                .setSmallIcon(R.drawable.baseline_notifications_none_24)
+                                .setContentTitle(notification.getTitle())
+                                .setContentText(notification.getText())
+                                .setAutoCancel(true);
 
-                    Intent intent = new Intent(context, NotificationActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        Intent intent = new Intent(context, NotificationActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                    PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-                    builder.setContentIntent(pendingIntent);
+                        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+                        builder.setContentIntent(pendingIntent);
 
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        NotificationChannel notificationChannel = notificationManager.getNotificationChannel("Fashion_Id_channel");
-                        if (notificationChannel == null) {
-                            notificationChannel = new NotificationChannel("Fashion_Id_channel", "Notification Channel", NotificationManager.IMPORTANCE_HIGH);
-                            notificationChannel.setLightColor(Color.GREEN);
-                            notificationChannel.enableVibration(true);
-                            notificationManager.createNotificationChannel(notificationChannel);
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            NotificationChannel notificationChannel = notificationManager.getNotificationChannel("Fashion_Id_channel");
+                            if (notificationChannel == null) {
+                                notificationChannel = new NotificationChannel("Fashion_Id_channel", "Notification Channel", NotificationManager.IMPORTANCE_HIGH);
+                                notificationChannel.setLightColor(Color.GREEN);
+                                notificationChannel.enableVibration(true);
+                                notificationManager.createNotificationChannel(notificationChannel);
+                            }
                         }
-                    }
 
-//                    int notificationId = generateUniqueId();
-                    notificationManager.notify(7709, builder.build());
+                        int notificationId = generateUniqueId();
+                        notificationManager.notify(notificationId, builder.build());
+
+                        // Mark the notification as seen
+                        markNotificationAsSeen(notification);
+                    }
                 }
             }
 
@@ -86,7 +97,20 @@ public class NotificationForegroundService extends Service {
         private boolean hasNewNotifications(List<NotificationDomain> notifications) {
             return !notifications.isEmpty();
         }
+
+        private boolean isNewNotification(NotificationDomain notification) {
+            // Check if the notification has not been seen before
+            return !tinyDB.getListObjectNotification("seenNotifications").contains(notification);
+        }
+
+        private void markNotificationAsSeen(NotificationDomain notification) {
+            // Mark the notification as seen
+            List<NotificationDomain> seenNotifications = tinyDB.getListObjectNotification("seenNotifications");
+            seenNotifications.add(notification);
+            tinyDB.putListObjectNotification("seenNotifications", seenNotifications);
+        }
     }
+
     private static int generateUniqueId() {
         long timestamp = System.currentTimeMillis();
         int random = (int) (Math.random() * 1000);

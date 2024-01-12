@@ -27,6 +27,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
@@ -133,5 +134,18 @@ public  interface ServerDetail {
 
     @DELETE("/api/products/reviewlike/{review_id}/delete/")
     Call<ReviewLikes> deleteReviewLike(@Header("Authorization") String authorization,@Path("review_id") int reviewId);
+
+
+    @Multipart
+    @PATCH("/api/user/profile/update/")
+    Call<UserProfile> postProfileImage(
+            @Header("Authorization") String authorization,
+            @Part MultipartBody.Part image
+    );
+    @PATCH("/api/user/profile/update/")
+    Call<UserProfile> updateProfileUser(
+            @Header("Authorization") String authorization,
+            @Body UserProfile profile
+    );
 
 }

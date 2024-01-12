@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -31,13 +32,16 @@ public class CartFragment extends Fragment {
     private TinyDB tinyDB;
     private UserAuthentication userAuth;
     private boolean isAuthent;
+    private ProgressBar progressBar8;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
         initView(view); // Initialize views here
+        progressBar8.setVisibility(View.VISIBLE);
         sendRequest();
+        progressBar8.setVisibility(View.GONE);
         return view;
     }
 
@@ -100,6 +104,7 @@ public class CartFragment extends Fragment {
         listviewCart = view.findViewById(R.id.listviewCart);
         tinyDB = new TinyDB(requireContext());
         isAuthent = tinyDB.getBoolean("isAuthent");
+        progressBar8 = view.findViewById(R.id.progressBar8);
 
     }
 
