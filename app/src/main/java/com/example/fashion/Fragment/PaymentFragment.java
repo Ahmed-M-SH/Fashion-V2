@@ -38,7 +38,9 @@ import com.example.fashion.Domain.MakeOreder;
 import com.example.fashion.Domain.OrderItem;
 import com.example.fashion.Domain.PaymentDetail;
 import com.example.fashion.Domain.PaymentType;
+import com.example.fashion.Domain.UserAuthentication;
 import com.example.fashion.Helper.RetrofitClient;
+import com.example.fashion.Helper.TinyDB;
 import com.example.fashion.R;
 import com.google.gson.Gson;
 
@@ -68,6 +70,9 @@ public class PaymentFragment extends Fragment {
     EditText phone_number1,address_payment,phone_number2;
     Button send_btn_final_payment2;
     private View view;
+    private TinyDB tinyDB;
+    private UserAuthentication userAuth;
+    private boolean isAuthent;
 
     @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,6 +99,8 @@ public class PaymentFragment extends Fragment {
             imageView = view.findViewById(R.id.imageView);
             downloadButton = view.findViewById(R.id.downloadButton);
             payment_group = view.findViewById(R.id.paynent_group);
+            tinyDB = new TinyDB(requireContext());
+            isAuthent = tinyDB.getBoolean("isAuthent");
             downloadButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -185,9 +192,10 @@ public class PaymentFragment extends Fragment {
         return null;
     }
         public  void sendPaymentDetailsRequest(){
-            String auth ="token 4ff24a3114344bc978419193eacdbca8316a82c8";
-            if (isAdded() && getContext() != null) {
-                Call<PaymentDetail> call = RetrofitClient.getInstance().getServerDetail().getPaymentDetail(auth);
+            if (isAuthent) {
+                userAuth = tinyDB.getObject("userAuth", UserAuthentication.class);
+                if (isAdded() && getContext() != null) {
+                Call<PaymentDetail> call = RetrofitClient.getInstance().getServerDetail().getPaymentDetail(userAuth.getToken());
                 call.enqueue(new Callback<PaymentDetail>() {
                     @Override
                     public void onResponse(Call<PaymentDetail> call, Response<PaymentDetail> response) {
@@ -214,12 +222,14 @@ public class PaymentFragment extends Fragment {
                     }
                 });
             }
+            }
         }
 
         public void makeOrderPayment(){
         RadioButton payButton = view.findViewById(payment_group.getCheckedRadioButtonId());
         payment_id = (int) payButton.getTag();
-            String auth ="token 4ff24a3114344bc978419193eacdbca8316a82c8";
+            if (isAuthent) {
+                userAuth = tinyDB.getObject("userAuth", UserAuthentication.class);
             MakeOreder order= new MakeOreder();
             order.setCity(cityId);
             order.setCurrency(currencyId);
@@ -336,7 +346,7 @@ public class PaymentFragment extends Fragment {
 //                });
 //            }
 //            else {
-            Call<MakeOreder> call = RetrofitClient.getInstance().getServerDetail().postMakeOrder(auth, order);
+            Call<MakeOreder> call = RetrofitClient.getInstance().getServerDetail().postMakeOrder(userAuth.getToken(), order);
             call.enqueue(new Callback<MakeOreder>() {
                 @Override
                 public void onResponse(Call<MakeOreder> call, Response<MakeOreder> response) {
@@ -383,31 +393,35 @@ public class PaymentFragment extends Fragment {
                     alertDialog.show();
                 }
             });
-//            }
+            }
         }
 private boolean success;
-        public boolean sendOrderProfit(int orderId){
-            String auth ="token 4ff24a3114344bc978419193eacdbca8316a82c8";
-            File imageFile = new File(getRealPathFromURI(imageUri));
-            MultipartBody.Part imagePart = MultipartBody.Part.createFormData(
-                    "proof_of_payment_image",
-                    imageFile.getName(),
-                    RequestBody.create(MediaType.parse("image/jpeg"), imageFile)
-            );
-            Call<MakeOreder> call= RetrofitClient.getInstance().getServerDetail().updateOrderImage(auth,orderId,imagePart);
+        public boolean sendOrderProfit(int orderId) {
+            if (isAuthent) {
+                userAuth = tinyDB.getObject("userAuth", UserAuthentication.class);
+                File imageFile = new File(getRealPathFromURI(imageUri));
+                MultipartBody.Part imagePart = MultipartBody.Part.createFormData(
+                        "proof_of_payment_image",
+                        imageFile.getName(),
+                        RequestBody.create(MediaType.parse("image/jpeg"), imageFile)
+                );
+                Call<MakeOreder> call = RetrofitClient.getInstance().getServerDetail().updateOrderImage(userAuth.getToken(), orderId, imagePart);
 
-             success =false;
-            call.enqueue(new Callback<MakeOreder>() {
-                @Override
-                public void onResponse(Call<MakeOreder> call, Response<MakeOreder> response) {
-                    if (response.code() == 200)
-                        success = true;
-                }
-                @Override
-                public void onFailure(Call<MakeOreder> call, Throwable t) {
-                    success = false;
-                }
-            });
-            return success;
+                success = false;
+                call.enqueue(new Callback<MakeOreder>() {
+                    @Override
+                    public void onResponse(Call<MakeOreder> call, Response<MakeOreder> response) {
+                        if (response.code() == 200)
+                            success = true;
+                    }
+
+                    @Override
+                    public void onFailure(Call<MakeOreder> call, Throwable t) {
+                        success = false;
+                    }
+                });
+            }
+                return success;
+
         }
     }

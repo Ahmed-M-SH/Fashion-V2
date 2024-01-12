@@ -13,6 +13,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 
 import com.example.fashion.Domain.NotificationDomain;
+import com.example.fashion.Domain.UserAuthentication;
 import com.example.fashion.Fragment.NotificationFragment;
 import com.example.fashion.R;
 
@@ -28,19 +29,19 @@ import retrofit2.Response;
     private String channelId="Fashion_Id_channel";
     Context context;
      private TinyDB tinyDB;
+     private UserAuthentication userAuth;
+     private boolean isAuthent;
 
      public ManagmentNotifications(Context context) {
          this.context = context;
          this.tinyDB = new TinyDB(context);
+         this.isAuthent= tinyDB.getBoolean("isAuthent");
      }
-
      public List<NotificationDomain> getUnreadNotifications(){
-//                 boolean isAuthent= tinyDB.getBoolean("isAuthent");
-//        if (isAuthent) {
-//            String userAuth = tinyDB.getString("userAuth");
-         String userAuth = "token 4ff24a3114344bc978419193eacdbca8316a82c8";
+        if (isAuthent) {
+             userAuth = tinyDB.getObject("userAuth", UserAuthentication.class);
          final List<NotificationDomain>[] notificationsResult = new List[]{new ArrayList()};
-         Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().getUnreadNotifications(userAuth);
+         Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().getUnreadNotifications(userAuth.getToken());
          call.enqueue(new Callback<List<NotificationDomain>>() {
              @Override
              public void onResponse(Call<List<NotificationDomain>> call, Response<List<NotificationDomain>> response) {
@@ -63,36 +64,42 @@ import retrofit2.Response;
              }
          });
          return notificationsResult[0];
+        }
+         else {
+            List<NotificationDomain> emptyDomain = new ArrayList<NotificationDomain>();
+             return emptyDomain;
+        }
     }
      public List<NotificationDomain> getAllNotifications(){
-//                 boolean isAuthent= tinyDB.getBoolean("isAuthent");
-//        if (isAuthent) {
-//            String userAuth = tinyDB.getString("userAuth");
-         String userAuth = "token 4ff24a3114344bc978419193eacdbca8316a82c8";
-         final List<NotificationDomain>[] notificationsResult = new List[]{new ArrayList()};
-         Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().getAllNotifications(userAuth);
-         call.enqueue(new Callback<List<NotificationDomain>>() {
-             @Override
-             public void onResponse(Call<List<NotificationDomain>> call, Response<List<NotificationDomain>> response) {
-                 List<NotificationDomain> notifications = response.body();
+         if (isAuthent) {
+             userAuth = tinyDB.getObject("userAuth", UserAuthentication.class);
+             final List<NotificationDomain>[] notificationsResult = new List[]{new ArrayList()};
+             Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().getAllNotifications(userAuth.getToken());
+             call.enqueue(new Callback<List<NotificationDomain>>() {
+                 @Override
+                 public void onResponse(Call<List<NotificationDomain>> call, Response<List<NotificationDomain>> response) {
+                     List<NotificationDomain> notifications = response.body();
 
-                 notificationsResult[0] = notifications;
-                 tinyDB.putListObjectNotification("Notifications", notifications);
-                 if (notifications.size() == 0) {
-                     Log.i("Notification", "Notification Service is empty");
-                 }
-                 else {
+                     notificationsResult[0] = notifications;
+                     tinyDB.putListObjectNotification("Notifications", notifications);
+                     if (notifications.size() == 0) {
+                         Log.i("Notification", "Notification Service is empty");
+                     } else {
 //                     makeNotifications(notifications);
-                     tinyDB.putObject("notifications", notifications);
+                         tinyDB.putObject("notifications", notifications);
+                     }
                  }
-             }
 
-             @Override
-             public void onFailure(Call<List<NotificationDomain>> call, Throwable t) {
+                 @Override
+                 public void onFailure(Call<List<NotificationDomain>> call, Throwable t) {
 
-             }
-         });
-         return notificationsResult[0];
+                 }
+             });
+             return notificationsResult[0];
+         }else {
+             List<NotificationDomain> emptyDomain = new ArrayList<NotificationDomain>();
+             return emptyDomain;
+         }
      }
      public void makeNotifications(List<NotificationDomain> notifications) {
          NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -130,22 +137,22 @@ import retrofit2.Response;
          return (int) (timestamp + random);
      }
 
-     public void readAllNotifications(){
-//                 boolean isAuthent= tinyDB.getBoolean("isAuthent");
-//        if (isAuthent) {
-//            String userAuth = tinyDB.getString("userAuth");
-         String userAuth = "token 4ff24a3114344bc978419193eacdbca8316a82c8";
-         Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().ReadAllNotifications(userAuth);
-         call.enqueue(new Callback<List<NotificationDomain>>() {
-             @Override
-             public void onResponse(Call<List<NotificationDomain>> call, Response<List<NotificationDomain>> response) {
-                 List<NotificationDomain> notifications = response.body();
-                    tinyDB.remove("unReadNotifications");
-             }
-             @Override
-             public void onFailure(Call<List<NotificationDomain>> call, Throwable t) {
+     public void readAllNotifications() {
+         if (isAuthent) {
+             userAuth = tinyDB.getObject("userAuth", UserAuthentication.class);
+             Call<List<NotificationDomain>> call = RetrofitClient.getInstance().getServerDetail().ReadAllNotifications(userAuth.getToken());
+             call.enqueue(new Callback<List<NotificationDomain>>() {
+                 @Override
+                 public void onResponse(Call<List<NotificationDomain>> call, Response<List<NotificationDomain>> response) {
+                     List<NotificationDomain> notifications = response.body();
+                     tinyDB.remove("unReadNotifications");
+                 }
 
-             }
-         });
+                 @Override
+                 public void onFailure(Call<List<NotificationDomain>> call, Throwable t) {
+
+                 }
+             });
+         }
      }
 }

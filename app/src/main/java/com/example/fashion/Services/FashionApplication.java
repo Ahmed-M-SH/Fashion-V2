@@ -10,9 +10,12 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.fashion.Helper.TinyDB;
+
 
 public class FashionApplication extends Application {
 
+    private static boolean isAuthent;
     private static final long DELAY_MILLIS = 60 * 1000; // 1 minute
 
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -48,7 +51,10 @@ public class FashionApplication extends Application {
 //            // For devices with API level lower than 26
 //            startService(new Intent(this, NotificationForegroundService.class));
 //        }
-//        startForegroundService();
+        startForegroundServiceWithDelay();
+        TinyDB tinyDB = new TinyDB(this);
+        FashionApplication.setIsAuthent(tinyDB.getBoolean("isAuthent"));
+
     }
 
     private void startForegroundServiceWithDelay() {
@@ -63,5 +69,14 @@ public class FashionApplication extends Application {
         } else {
             startService(serviceIntent);
         }
+    }
+
+
+    public static boolean isIsAuthent() {
+        return isAuthent;
+    }
+
+    public static void setIsAuthent(boolean isAuthent) {
+        FashionApplication.isAuthent = isAuthent;
     }
 }

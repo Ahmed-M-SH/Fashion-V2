@@ -39,7 +39,6 @@ public  class UserManagement {
 //                else
 //                    Toast.makeText(context,"Error Code:"+response.code(), Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onFailure(Call<List<UserProfile>> call, Throwable t) {
                 Toast.makeText(context,"Error sending request To Get Profile and error code:"+t.getMessage(), Toast.LENGTH_LONG).show();

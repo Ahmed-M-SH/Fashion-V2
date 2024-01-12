@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.fashion.Domain.CartProduct;
 import com.example.fashion.Fragment.CartFragment;
 import com.example.fashion.R;
+import com.example.fashion.Services.FashionApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,11 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        if (!FashionApplication.isIsAuthent()){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
         initView();
         fragment = new CartFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();

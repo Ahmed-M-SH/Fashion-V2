@@ -13,6 +13,7 @@ import com.example.fashion.Domain.ProductDetail;
 import com.example.fashion.Domain.ProductRate;
 import com.example.fashion.Domain.ProductResult;
 import com.example.fashion.Domain.Promotion;
+import com.example.fashion.Domain.ReviewLikes;
 import com.example.fashion.Domain.UserAuthentication;
 import com.example.fashion.Domain.UserProfile;
 
@@ -127,6 +128,10 @@ public  interface ServerDetail {
     @POST("/api/auth/sginup/")
     Call<UserProfile> getUserRegistration(@Body UserProfile userProfile);
 
+    @POST("/api/products/reviewlike/create/")
+    Call<ReviewLikes> postReviewLike(@Header("Authorization") String authorization, @Body ReviewLikes reviewLikes);
 
+    @DELETE("/api/products/reviewlike/{review_id}/delete/")
+    Call<ReviewLikes> deleteReviewLike(@Header("Authorization") String authorization,@Path("review_id") int reviewId);
 
 }

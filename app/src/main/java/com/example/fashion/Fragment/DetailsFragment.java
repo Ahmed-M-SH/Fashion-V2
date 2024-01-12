@@ -103,9 +103,9 @@ public class DetailsFragment extends Fragment {
                     recyclerReview.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
                     ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(item.getImage());
                     viewPager.setAdapter(imagePagerAdapter);
-                    adapterReview = new ReviewAdapter(item);
+                    adapterReview = new ReviewAdapter(item,isAuthent);
                     recyclerReview.setAdapter(adapterReview);
-//                    cartProduct.setProduct(item.getId());
+                    cartProduct.setProduct(item.getId());
                 }
 
                 @Override
@@ -138,7 +138,7 @@ public class DetailsFragment extends Fragment {
                         recyclerReview.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
                         ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(item.getImage());
                         viewPager.setAdapter(imagePagerAdapter);
-                        adapterReview = new ReviewAdapter(item);
+                        adapterReview = new ReviewAdapter(item,isAuthent);
                         recyclerReview.setAdapter(adapterReview);
 //                        cartProduct.setProduct(item.getId());
                     }

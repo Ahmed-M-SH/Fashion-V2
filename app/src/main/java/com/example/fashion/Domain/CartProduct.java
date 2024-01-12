@@ -42,8 +42,6 @@ public class CartProduct implements Serializable {
         this.total = total;
     }
 
-
-
     @SerializedName("id")
     @Expose
     private Integer id;

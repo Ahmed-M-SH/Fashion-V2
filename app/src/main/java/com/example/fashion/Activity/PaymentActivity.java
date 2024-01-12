@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.example.fashion.Fragment.DetailsFragment;
 import com.example.fashion.Fragment.PaymentFragment;
 import com.example.fashion.R;
+import com.example.fashion.Services.FashionApplication;
 
 public class PaymentActivity extends AppCompatActivity {
     private ImageView backBttnn;
@@ -19,7 +20,11 @@ public class PaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-
+        if (!FashionApplication.isIsAuthent()){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
         PaymentFragment fragment = new PaymentFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

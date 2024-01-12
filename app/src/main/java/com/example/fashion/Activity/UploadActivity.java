@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fashion.Helper.DBHelper;
 import com.example.fashion.Models.ModelClass;
 import com.example.fashion.R;
+import com.example.fashion.Services.FashionApplication;
 
 import java.io.IOException;
 public class UploadActivity extends AppCompatActivity {
@@ -34,6 +35,11 @@ public class UploadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+        if (!FashionApplication.isIsAuthent()){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
         uploadEmail = findViewById(R.id.uploadEmail);
         uploadImage = findViewById(R.id.uploadImage);
         uploadName = findViewById(R.id.uploadName);

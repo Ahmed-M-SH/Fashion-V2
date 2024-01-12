@@ -47,7 +47,6 @@ public class NotificationForegroundService extends Service {
         protected Void doInBackground(Void... voids) {
             ManagmentNotifications mNotifications = new ManagmentNotifications(context);
             List<NotificationDomain> notifications = mNotifications.getUnreadNotifications();
-
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             boolean hasNewNotifications = hasNewNotifications(notifications);
@@ -76,10 +75,11 @@ public class NotificationForegroundService extends Service {
                         }
                     }
 
-                    int notificationId = generateUniqueId();
-                    notificationManager.notify(notificationId, builder.build());
+//                    int notificationId = generateUniqueId();
+                    notificationManager.notify(7709, builder.build());
                 }
             }
+
             return null;
         }
 
@@ -87,7 +87,6 @@ public class NotificationForegroundService extends Service {
             return !notifications.isEmpty();
         }
     }
-
     private static int generateUniqueId() {
         long timestamp = System.currentTimeMillis();
         int random = (int) (Math.random() * 1000);
