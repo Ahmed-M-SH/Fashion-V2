@@ -34,7 +34,7 @@ public  class UserManagement {
                 List<UserProfile> user = response.body();
 
                 if (response.isSuccessful()) {
-                    tinyDB.putObject("profile", user.get(0));
+                    tinyDB.putObject("profile", user.stream().findFirst());
                 }
 //                else
 //                    Toast.makeText(context,"Error Code:"+response.code(), Toast.LENGTH_SHORT).show();
@@ -46,7 +46,6 @@ public  class UserManagement {
             }
 
         });
-
     }
     public static void sendRequestProfile(UserAuthentication authentication) {
         UserAuthentication auth = tinyDB.getObject("userAuth", UserAuthentication.class);
