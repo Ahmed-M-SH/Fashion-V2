@@ -47,6 +47,9 @@ public  interface ServerDetail {
 
     @GET("/api/products/")
     Call <ProductResult> getProduct(@Query("category") int category);
+
+    @GET("/api/products/")
+    Call <ProductResult> searchProduct(@Query("search") String search);
     @GET("/api/products/")
     Call <ProductResult> getProduct(@Header("Authorization") String authorization);
     @GET("/api/categorys/")

@@ -73,11 +73,12 @@ public class HomeFragment extends Fragment {
         sendPromotionRequest();
         sendCategoryRequest();
         sendProductRequest();
-        progressBar.setVisibility(View.GONE);
         return view;
     }
 
     private void sendPromotionRequest() {
+        progressBar.setVisibility(View.VISIBLE);
+
         Call<List<Promotion>> call = RetrofitClient.getInstance().getServerDetail().getPromotion();
         call.enqueue(new Callback<List<Promotion>>() {
             @Override
@@ -110,8 +111,12 @@ public class HomeFragment extends Fragment {
                 // Handle the failure case
             }
         });
+        progressBar.setVisibility(View.GONE);
+
     }
     private void sendCategoryRequest() {
+        progressBar.setVisibility(View.VISIBLE);
+
 //        Gson gson = new GsonBuilder()
 //                .registerTypeAdapter(Category.class, new CategoryDeserializer())
 //                .create();
@@ -130,19 +135,21 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                List<Category> item = response.body();
-                categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+                categoryRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false));
                 categoryAdapter = new HomeCategoryAdapter(item);
                 categoryRecyclerView.setAdapter(categoryAdapter);
             }
 
             @Override
             public void onFailure(Call<List<Category>> call, Throwable t) {
-                Toast.makeText(getActivity().getApplicationContext(), "An error has occured on Category", Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), "An error has occured on Category", Toast.LENGTH_LONG)
                         .show();
                 Log.i("onFailure", "Error: " + t.getMessage());
             }
 
         });
+        progressBar.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -160,6 +167,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void sendProductRequest() {
+        progressBar.setVisibility(View.VISIBLE);
+
         Call<ProductResult> call = RetrofitClient.getInstance()
                 .getServerDetail()
                 .getProduct();
@@ -167,22 +176,24 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<ProductResult> call, Response<ProductResult> response) {
                 ProductResult item = response.body();
-                productrecyclerView.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 2));
-                Log.i("RESPONSE", "OnResponse: " + item);
+                productrecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+//                Log.i("RESPONSE", "OnResponse: " + item);
                 productAdapter = new HomeProductAdapter(item);
                 productrecyclerView.setAdapter(productAdapter);
-                Log.i("RESPONSE", "OnResponse: " + item);
+//                Log.i("RESPONSE", "OnResponse: " + item);
             }
 
 
             @Override
             public void onFailure(Call<ProductResult> call, Throwable t) {
-                Toast.makeText(getActivity().getApplicationContext(), "An error has occured on product", Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), "An error has occured on product", Toast.LENGTH_LONG)
                         .show();
-                Log.i("onFailure", "Error: " + t.getMessage());
+//                Log.i("onFailure", "Error: " + t.getMessage());
 
             }
         });
+        progressBar.setVisibility(View.GONE);
+
     }
 
 //    private void initView(View view) {
@@ -208,13 +219,13 @@ public class HomeFragment extends Fragment {
         categoryRecyclerView = view.findViewById(R.id.icon_recyclerView);
         notificationImg = view.findViewById(R.id.notificationImg);
         notification_status = view.findViewById(R.id.noitficatin_stetes);
-        tinyDB = new TinyDB(getActivity().getApplicationContext());
+        tinyDB = new TinyDB(requireContext());
         viewPager = view.findViewById(R.id.view_pager);
         progressBar = view.findViewById(R.id.progressBar);
         notificationImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), NotificationActivity.class);
+                Intent intent = new Intent(requireContext(), NotificationActivity.class);
                 getActivity().startActivity(intent);
             }
         });

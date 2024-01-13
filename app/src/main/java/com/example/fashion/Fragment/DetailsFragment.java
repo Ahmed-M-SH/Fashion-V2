@@ -92,7 +92,6 @@ public class DetailsFragment extends Fragment {
                 public void onResponse(Call<ProductDetail> call, retrofit2.Response<ProductDetail> response) {
                     ProductDetail item = response.body();
                     productDetail = item;
-                    Log.i("OnSuccesses", "Respnse: " + response.body().toString());
 
                     titleTxt.setText("" + item.getName());
                     descriptionTxt.setText(item.getDescription());

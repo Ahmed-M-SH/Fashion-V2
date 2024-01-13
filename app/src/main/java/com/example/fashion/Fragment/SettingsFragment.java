@@ -126,43 +126,49 @@ public class SettingsFragment extends Fragment {
     private void sendUpdateProfileRequest(){
         boolean isUpdated = false;
         UpdateUserProfile updateUserProfile = new UpdateUserProfile();
-        if (!uploadPhone.getText().toString().equals(userProfile.getPhoneNumber())) {
+//        if (!uploadPhone.getText().toString().equals(userProfile.getPhoneNumber())) {
             userProfile.setPhoneNumber(uploadPhone.getText().toString());
             updateUserProfile.setPhoneNumber(uploadPhone.getText().toString());
             isUpdated = true;
-        }
+//        }
 
-        if (!uploadName.getText().toString().equals(userProfile.getName())) {
+//        if (!uploadName.getText().toString().equals(userProfile.getName())) {
             userProfile.setName(uploadName.getText().toString());
             updateUserProfile.setName(uploadName.getText().toString());
             isUpdated = true;
-        }
+//        }
 
-        if (!uploadEmail.getText().toString().equals(userProfile.getEmail())) {
+//        if (!uploadEmail.getText().toString().equals(userProfile.getEmail())) {
             userProfile.setEmail(uploadEmail.getText().toString());
             updateUserProfile.setEmail(uploadEmail.getText().toString());
             isUpdated = true;
-        }
-        if (imageUri != null){
+//        }
+        if (imageUri != null)
             sendProfileImage();
-            if (!isUpdated)
-                return;
-            if (isUpdated) {
+//            if (!isUpdated)
+//                return;
+//            if (isUpdated) {
+        progressBar11.setVisibility(View.VISIBLE);
                 Call<UserProfile> call = RetrofitClient.getInstance().getServerDetail().updateProfileUser(auth.getToken(), updateUserProfile);
                 call.enqueue(new Callback<UserProfile>() {
                     @Override
                     public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
-                        Toast.makeText(requireContext(),"Updated successfully",Toast.LENGTH_LONG).show();
+                        if (response.code() ==200)
+                            tinyDB.putObject("profile",response.body());
+                        Toast.makeText(requireContext(),"تم التحديث ملفك الشخصي بنجاح",Toast.LENGTH_LONG).show();
+                        progressBar11.setVisibility(View.GONE);
                     }
                     @Override
                     public void onFailure(Call<UserProfile> call, Throwable t) {
+                        Toast.makeText(requireContext(),"حدث خطاء في ارسال الطلب تاكد من الانترنت لديك",Toast.LENGTH_LONG).show();
 
+                        progressBar11.setVisibility(View.GONE);
                     }
                 });
             }
 
-        }
-    }
+//        }
+//    }
     private void sendProfileImage(){
 
 
@@ -172,15 +178,20 @@ public class SettingsFragment extends Fragment {
                     imageFile.getName(),
                     RequestBody.create(MediaType.parse("image/*"), imageFile)
             );
+            progressBar11.setVisibility(View.VISIBLE);
             Call<UserProfile> call = RetrofitClient.getInstance().getServerDetail().postProfileImage(auth.getToken(), imagePart);
             call.enqueue(new Callback<UserProfile>() {
                 @Override
                 public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
-
+                    if (response.code() ==200)
+                        tinyDB.putObject("profile",response.body());
+                    Toast.makeText(requireContext(),"تم التحديث ملفك الشخصي بنجاح",Toast.LENGTH_LONG).show();
+                    progressBar11.setVisibility(View.GONE);
                 }
-
                 @Override
                 public void onFailure(Call<UserProfile> call, Throwable t) {
+                    Toast.makeText(requireContext(),"حدث خطاء في ارسال الطلب تاكد من الانترنت لديك",Toast.LENGTH_LONG).show();
+                    progressBar11.setVisibility(View.GONE);
 
                 }
             });

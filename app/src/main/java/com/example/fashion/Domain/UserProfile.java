@@ -110,6 +110,8 @@ public class UserProfile {
         if (image != null && !image.startsWith("http")) {
             return ServerDetail.endpoint + image;
         }
+        if (image == null)
+            return "";
         return image;
     }
 
