@@ -25,6 +25,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.bumptech.glide.Glide;
+import com.example.fashion.Domain.UserProfile;
 import com.example.fashion.Fragment.AboutFragment;
 import com.example.fashion.Fragment.OrderListFragment;
 import com.example.fashion.Helper.DBHelper;
@@ -108,20 +110,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        DBHelper dbHelper = new DBHelper(this);
-        Cursor cursor = dbHelper.getUser();
-        if (cursor.getCount() == 0) {
-            Toast.makeText(this, "No Profile Details", Toast.LENGTH_SHORT).show();
-        } else {
-            while (cursor.moveToNext()) {
-                navName.setText("" + cursor.getString(0));
-                navEmail.setText("" + cursor.getString(1));
-                byte[] imageByte = cursor.getBlob(2);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
-                navImage.setImageBitmap(bitmap);
-            }
-        }
+//        DBHelper dbHelper = new DBHelper(this);
+//        Cursor cursor = dbHelper.getUser();
+//
+//        if (cursor.getCount() == 0) {
+//            Toast.makeText(this, "No Profile Details", Toast.LENGTH_SHORT).show();
+//        } else {
+//            while (cursor.moveToNext()) {
+//                navName.setText("" + cursor.getString(0));
+//                navEmail.setText("" + cursor.getString(1));
+//                byte[] imageByte = cursor.getBlob(2);
+//                Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+//                navImage.setImageBitmap(bitmap);
+//            }
+//        }
+        if (isAuthent) {
+            UserProfile profile = tinyDB.getObject("profile", UserProfile.class);
 
+            navName.setText("" + profile.getName());
+            navEmail.setText("" + profile.getEmail());
+//                byte[] imageByte = cursor.getBlob(2);
+//                Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+//                navImage.setImageBitmap(bitmap);
+            if (!profile.getImage().isEmpty())
+                Glide.with(getApplicationContext()).load(profile.getImage()).into(navImage);
+
+        }
 
 
 //        fab.setOnClickListenner(new View.OnClickListener() {
@@ -185,6 +199,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }else{
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(intent);
+                    break;
+
                 }
             case R.id.nav_share:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
