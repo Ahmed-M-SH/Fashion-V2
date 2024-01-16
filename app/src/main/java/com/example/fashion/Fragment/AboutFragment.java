@@ -33,9 +33,9 @@ public class AboutFragment extends Fragment {
         buttonContactUs = view.findViewById(R.id.buttonContactUs);
         buttonShareWhatsApp = view.findViewById(R.id.buttonShareWhatsApp);
 
-        imageViewLogo.setImageResource(R.drawable.cat1);
-        textViewAppName.setText("اسم التطبيق");
-        textViewDescription.setText("وصف التطبيق");
+//        imageViewLogo.setImageResource(R.drawable.cat1);
+//        textViewAppName.setText("اسم التطبيق");
+//        textViewDescription.setText("وصف التطبيق");
 
         buttonContactUs.setOnClickListener(new View.OnClickListener() {
             @Override
