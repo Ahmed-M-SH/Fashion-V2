@@ -119,7 +119,6 @@ public class DetailsFragment extends Fragment {
             });
         }
         else {
-            if (isAuthent) {
                 Call<ProductDetail> call = RetrofitClient.getInstance().getServerDetail().getProductDetail(productId);
                 call.enqueue(new Callback<ProductDetail>() {
                     @Override
@@ -152,7 +151,7 @@ public class DetailsFragment extends Fragment {
                     }
                 });
             }
-        }
+
     }
 
     private void initView(View view) {

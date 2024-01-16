@@ -52,7 +52,7 @@ public class OrderListFragment extends Fragment {
                 public void onResponse(Call<List<OrderDetail>> call, Response<List<OrderDetail>> response) {
                     List<OrderDetail> orders = response.body();
                     orderDetailAdapter = new OrderDetailAdapter(orders);
-                    orderRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true));
+                    orderRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, true));
                     orderRecyclerView.setAdapter(orderDetailAdapter);
                 }
 

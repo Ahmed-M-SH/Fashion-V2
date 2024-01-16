@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:text="اتصل بنا"
         android:textSize="18sp"
+        android:visibility="gone"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp" />
 
@@ -48,8 +49,8 @@
         android:id="@+id/buttonShareWhatsApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="مشاركة عبر WhatsApp"
-        android:textSize="18sp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:text="تواصل معنا عبر WhatsApp"
+        android:textSize="18sp" />
 
 </LinearLayout>

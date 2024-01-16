@@ -29,6 +29,7 @@ import com.example.fashion.Fragment.AboutFragment;
 import com.example.fashion.Fragment.OrderListFragment;
 import com.example.fashion.Helper.DBHelper;
 import com.example.fashion.Fragment.HomeFragment;
+import com.example.fashion.Helper.ServerDetail;
 import com.example.fashion.Helper.TinyDB;
 import com.example.fashion.R;
 import com.example.fashion.Fragment.SettingsFragment;
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
 //                        new ShareFragment()).commit();
 
-                String APP_LINK = "https://your-app-link.com";
+                String APP_LINK = ServerDetail.endpoint;
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out this app!");
