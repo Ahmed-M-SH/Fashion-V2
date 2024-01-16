@@ -37,9 +37,11 @@ import retrofit2.http.Query;
 
 public  interface ServerDetail {
     static String port = "8000";
-    public static String endpoint = "http://192.168.1.2:" + port;
+//    public static String endpoint = "http://192.168.1.2:" + port;
+        public static String endpoint = "https://ahmedcoding.pythonanywhere.com";
 
-//    -------------- GET Methods  --------------
+
+    //    -------------- GET Methods  --------------
     @GET("/api/products/")
     Call <ProductResult> getProduct();
     @GET("/api/products/promotion/")
